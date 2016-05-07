@@ -1,19 +1,23 @@
+import java.util.ArrayList;
 
 public class InferenceEngine {
-	
-	
-	
+
 	// Constructor accepts a string containing the whole knowledgebase
 	// It splits up the string by semi-colons to create sentences and put them in a Knowledgebase field as a collection of sentences
 	// JACQUELINE TO WRITE
 	public InferenceEngine(String aKB)
     {
-        
-		System.out.println("Knowledge base: " + aKB);
-		
+       String[] aSentence = aKB.split(aKB, ';');
+       
+       ArrayList<String> aKnowledgeBase = new ArrayList<>();
+       
+       for(int i = 0; i < aKB.length(); i++)
+       {
+    	   aKnowledgeBase.add(aSentence[i]);
+       }
+       
+	System.out.println("Knowledge base: " + aKnowledgeBase);
     }
-	
-	
 	
 	
 	// converts a string of a sentence into an Reverse Polish Notation (RPN) array containing variables, operators, and bracket objects
