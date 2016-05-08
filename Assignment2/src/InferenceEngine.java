@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class InferenceEngine {
 
+	private ArrayList<String> aKnowledgeBase;
+	
 	// Constructor accepts a string containing the whole knowledgebase
 	// It splits up the string by semi-colons to create sentences and put them in a Knowledgebase field as a collection of sentences
 	// JACQUELINE TO WRITE
@@ -9,7 +11,7 @@ public class InferenceEngine {
     {
        String[] aSentence = aKB.split(aKB, ';');
        
-       ArrayList<String> aKnowledgeBase = new ArrayList<>();
+       aKnowledgeBase = new ArrayList<>();
        
        for(int i = 0; i < aKB.length(); i++)
        {
