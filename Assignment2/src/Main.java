@@ -45,6 +45,8 @@ public class Main {
             	}
             }
             
+            lBuffer.close();
+            
             // need to make sure if lKB and lQ aren't found/set, it errors and exits
             
             

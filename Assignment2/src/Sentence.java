@@ -13,6 +13,8 @@ public class Sentence {
 		fLiteralsLength = 0;
 		fRpnSentenceLength = 0;
 		// interpret aSentence as and fill out stuff
+		
+		
 	}
 	
 	
