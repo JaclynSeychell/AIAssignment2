@@ -1,19 +1,93 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Sentence {
-	// DALE TO WRITE
 	
-	private ArrayList<String> fLiterals;
+	private ArrayList<Literal> fLiterals;
 	private int fLiteralsLength;
 	private ArrayList<ProLogic> fRpnSentence; // this shouldn't be called math logic, it should be prologic
 	private int fRpnSentenceLength;
 
 	public Sentence(String aSentence)
 	{
+		// setup temp variables
+		int k;
+		Stack<Operator> lOperators = new Stack<>();
+		
+		// initialise fields
 		fLiteralsLength = 0;
 		fRpnSentenceLength = 0;
-		// interpret aSentence as and fill out stuff
+		fRpnSentence = new ArrayList<ProLogic>();	//?? do I need to redefine the <type> here? - seemed to not error without it
+		fLiterals = new ArrayList<Literal>();
 		
+
+
+		aSentence = aSentence.trim(); // trim blank space off ends of whole sentence
+		
+		// couldn't get this example to work
+		
+		// "\G" means match all in string rather than stopping after the first
+		//String[] lSentence = aSentence.split("(?<=\\G(\\w+(?!\\w+)|==|<=|>=|\\+|/|\\*|-|(<|>)(?!=)))\\s*");
+		//String[] lSentence = aSentence.split("(?<=\\G(\\w+(?!\\w+)|=>|&|\\||\\+|/|\\*|-|(<|>)(?!=)))\\s*");
+		
+		
+		// so I made my own
+		
+		// "\" is always doubled because it is javascript's escape character
+		String lDelims = "";
+		lDelims += "\\b"; // any alpha/numeric boundary
+		lDelims += "|"; // or
+		lDelims += "(\\B(?=\\())"; // any non alpha/numeric boundary (ie numeric/numeric) that is followed by an open bracket
+		lDelims += "|"; // or
+		lDelims += "((?<=\\))\\B)"; // any non alpha/numeric boundary (ie numeric/numeric) that follows a close bracket
+		String[] lSentence = aSentence.split(lDelims);
+		
+		
+		
+		
+				
+		for(String lLogicStr : lSentence)
+		{
+			lLogicStr = lLogicStr.trim(); // remove white space characters from either end
+			//System.out.println("item: "+item);
+			
+			if( Operator.isOperator(lLogicStr) ){
+				// it's an operator
+				
+				Operator lCurOperator = new Operator(lLogicStr);
+				
+				while(!lOperators.isEmpty() && lOperators.peek().getPrecedence() < lCurOperator.getPrecedence()) 
+	            {
+					addToSentence(lOperators.pop());
+	            }
+				lOperators.push(lCurOperator);
+				
+				
+			} else if(lLogicStr == ")") {
+				// it's a close bracket
+				
+				Operator lCurOperator; 
+				// put all Operators saved up after the left bracket into the Sentence
+	            while(!lOperators.isEmpty() && (lCurOperator = lOperators.pop()).getName() != "(")
+	            	addToSentence(lCurOperator);  
+	            
+			} else if( lLogicStr == " " || lLogicStr.length()==0 ) {
+				// the regEx split above should result in no spaces or empty strings, but ignore them just incase
+			} else {
+				// all other strings should be interpreted as a Literal
+				Literal lLiteral = new Literal(lLogicStr);
+				addLiteral(lLiteral);
+				addToSentence(lLiteral);
+			}
+			
+		}
+		
+		
+		//Add all of the remaining operators to fRpnSentence
+        while( !lOperators.isEmpty() )
+        	addToSentence(lOperators.pop());
+        
+        
 		
 	}
 	
@@ -23,19 +97,15 @@ public class Sentence {
 	 * Manipulating Literals
 	 */
 	
-	private void addLiteral()
+	private void addLiteral(Literal aLiteral)
 	{
-		
-		// if valid add to Literals and
+		fLiterals.add(aLiteral);
 		fLiteralsLength++;
 	}
 	
 	public Literal getLiteral(int aIndex)
 	{
-		
-		Literal temp = new Literal("temp");
-		
-		return temp;
+		return fLiterals.get(aIndex);
 	}
 	
 	public int literalsLength()
@@ -50,18 +120,15 @@ public class Sentence {
 	 * Manipulating the Sentence
 	 */
 	
-	private void addToSentence(ProLogic aItem)
+	private void addToSentence(ProLogic aProLogic)
 	{
-		
-		// if valid add to sentence and
+		fRpnSentence.add(aProLogic);
 		fRpnSentenceLength++;
 	}
 	
 	public ProLogic getFromSentence(int aIndex)
 	{
-		
-		Literal temp = new Literal("temp");
-		return temp;
+		return fRpnSentence.get(aIndex);
 	}
 	
 	public int sentenceLength()

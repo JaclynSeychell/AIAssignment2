@@ -8,7 +8,7 @@ public abstract class ProLogic {
         this.fName = aName;
     }
     
-    public String name()
+    public String getName()
     {
         return fName;
     }

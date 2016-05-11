@@ -1,0 +1,13 @@
+RegEx reference for splitting the sentence:
+
+http://stackoverflow.com/questions/9856916/java-string-split-regex
+https://www.cheatography.com/davechild/cheat-sheets/regular-expressions/
+http://www.2ality.com/2013/08/regexp-g.html
+https://docs.racket-lang.org/guide/Looking_Ahead_and_Behind.html
+https://regex101.com/r/jH4nC4/2
+http://www.regular-expressions.info/captureall.html
+
+jUnit Testing:
+
+http://www.cavdar.net/2008/07/21/junit-4-in-60-seconds/
+
