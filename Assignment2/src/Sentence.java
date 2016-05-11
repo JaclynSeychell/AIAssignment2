@@ -4,9 +4,7 @@ import java.util.Stack;
 public class Sentence {
 	
 	private ArrayList<Literal> fLiterals;
-	private int fLiteralsLength;
 	private ArrayList<ProLogic> fRpnSentence; // this shouldn't be called math logic, it should be prologic
-	private int fRpnSentenceLength;
 
 	public Sentence(String aSentence)
 	{
@@ -15,8 +13,6 @@ public class Sentence {
 		Stack<Operator> lOperators = new Stack<>();
 		
 		// initialise fields
-		fLiteralsLength = 0;
-		fRpnSentenceLength = 0;
 		fRpnSentence = new ArrayList<ProLogic>();	//?? do I need to redefine the <type> here? - seemed to not error without it
 		fLiterals = new ArrayList<Literal>();
 		
@@ -37,13 +33,18 @@ public class Sentence {
 		String lDelims = "";
 		lDelims += "\\b"; // any alpha/numeric boundary
 		lDelims += "|"; // or
-		lDelims += "(\\B(?=\\())"; // any non alpha/numeric boundary (ie numeric/numeric) that is followed by an open bracket
+		lDelims += "(\\B(?=\\())"; // any non alpha/numeric boundary that is followed by an open bracket. ie &( 
+		lDelims += "|"; // or
+		lDelims += "(\\B(?=!))"; // any non alpha/numeric boundary that is followed by an exclamation. ie &!
 		lDelims += "|"; // or
 		lDelims += "((?<=\\))\\B)"; // any non alpha/numeric boundary (ie numeric/numeric) that follows a close bracket
 		String[] lSentence = aSentence.split(lDelims);
 		
 		
 		
+		
+		// TODO Negation should be put after the variable it applies to
+		// what about brackets, are they okay?
 		
 				
 		for(String lLogicStr : lSentence)
@@ -55,21 +56,35 @@ public class Sentence {
 				// it's an operator
 				
 				Operator lCurOperator = new Operator(lLogicStr);
-				
-				while(!lOperators.isEmpty() && lOperators.peek().getPrecedence() < lCurOperator.getPrecedence()) 
-	            {
+				 
+				while(	!lOperators.isEmpty() &&
+						( lOperators.peek().getPrecedence() < lCurOperator.getPrecedence() )
+						) {
 					addToSentence(lOperators.pop());
 	            }
+				
 				lOperators.push(lCurOperator);
 				
 				
-			} else if(lLogicStr == ")") {
+			} else if( "(".equals(lLogicStr) ) {
+				// it's an open bracket
+				
+				//push it straight into the operator stack regardless of precedence
+				lOperators.push( new Operator(lLogicStr) );
+					
+			} else if( ")".equals(lLogicStr) ) {
 				// it's a close bracket
 				
 				Operator lCurOperator; 
 				// put all Operators saved up after the left bracket into the Sentence
-	            while(!lOperators.isEmpty() && (lCurOperator = lOperators.pop()).getName() != "(")
-	            	addToSentence(lCurOperator);  
+	            while(!lOperators.isEmpty())
+	            {
+	            	lCurOperator = lOperators.pop();
+	            	if( "(".equals(lCurOperator.getName()) )
+	            		break;
+	            	
+	            	addToSentence(lCurOperator);
+	            }
 	            
 			} else if( lLogicStr == " " || lLogicStr.length()==0 ) {
 				// the regEx split above should result in no spaces or empty strings, but ignore them just incase
@@ -100,7 +115,6 @@ public class Sentence {
 	private void addLiteral(Literal aLiteral)
 	{
 		fLiterals.add(aLiteral);
-		fLiteralsLength++;
 	}
 	
 	public Literal getLiteral(int aIndex)
@@ -110,7 +124,7 @@ public class Sentence {
 	
 	public int literalsLength()
 	{
-		return fLiteralsLength;
+		return fLiterals.size();
 	}
 	
 	
@@ -123,7 +137,6 @@ public class Sentence {
 	private void addToSentence(ProLogic aProLogic)
 	{
 		fRpnSentence.add(aProLogic);
-		fRpnSentenceLength++;
 	}
 	
 	public ProLogic getFromSentence(int aIndex)
@@ -133,7 +146,7 @@ public class Sentence {
 	
 	public int sentenceLength()
 	{
-		return fRpnSentenceLength;
+		return fRpnSentence.size();
 	}
 	
 	

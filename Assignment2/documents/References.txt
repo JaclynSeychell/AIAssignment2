@@ -11,3 +11,6 @@ jUnit Testing:
 
 http://www.cavdar.net/2008/07/21/junit-4-in-60-seconds/
 
+Operator Precedence:
+
+http://academics.triton.edu/faculty/ebell/2%20-%20Propositional%20Logic.pdf
