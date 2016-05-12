@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class InferenceEngine {
 
+	//
 	private ArrayList<Sentence> fKnowledgeBase;
 	
 	// Constructor accepts a string containing the whole knowledgebase
