@@ -9,7 +9,7 @@ public class Test_Sentence {
 	@Test
 	public void Sentence_SpacesTest() throws Exception {
 		
-		Sentence lSentence = new Sentence("Big & ! Tall => Giant");
+		Sentence lSentence = new Sentence("Big & ~ Tall => Giant");
 		
 		String lLiterals = "";
 		for( int k=0; k<lSentence.literalsLength(); k++ )
@@ -28,7 +28,7 @@ public class Test_Sentence {
 			lRpnSentence += lSentence.getFromSentence(k).getName();
 		
 		assertEquals(6, lSentence.sentenceLength());	// Check the number of elements in the sentence is exact
-		assertEquals("BigTall!&Giant=>", lRpnSentence);	// Check is has been ordered correctly
+		assertEquals("BigTall~&Giant=>", lRpnSentence);	// Check is has been ordered correctly
 		
 	}
 	
@@ -73,13 +73,13 @@ public class Test_Sentence {
 	@Test
 	public void Sentence_NegationTest() throws Exception {
 		
-		Sentence lSentence = new Sentence("Big&!Tall=>Giant");
+		Sentence lSentence = new Sentence("Big&~Tall=>Giant");
 		
 		String lRpnSentence = "";
 		for( int k=0; k<lSentence.sentenceLength(); k++ )
 			lRpnSentence += lSentence.getFromSentence(k).getName();
 		
-		assertEquals("BigTall!&Giant=>", lRpnSentence);	// Check is has been ordered correctly
+		assertEquals("BigTall~&Giant=>", lRpnSentence);	// Check is has been ordered correctly
 		
 	}
 	
@@ -89,7 +89,7 @@ public class Test_Sentence {
 	@Test
 	public void Sentence_BracketTest() throws Exception {
 		
-		Sentence lSentence = new Sentence("(A | B) & (C | D) => E");
+		Sentence lSentence = new Sentence("(A \\/ B) & (C \\/ D) => E");
 		
 		
 		String lLiterals = "";
@@ -108,7 +108,7 @@ public class Test_Sentence {
 			lRpnSentence += lSentence.getFromSentence(k).getName();
 		
 		
-		assertEquals("AB|CD|&E=>", lRpnSentence);	// Check is has been ordered correctly
+		assertEquals("AB\\/CD\\/&E=>", lRpnSentence);	// Check is has been ordered correctly
 		
 		
 	}

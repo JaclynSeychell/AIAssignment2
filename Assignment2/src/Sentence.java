@@ -35,7 +35,7 @@ public class Sentence {
 		lDelims += "|"; // or
 		lDelims += "(\\B(?=\\())"; // any non alpha/numeric boundary that is followed by an open bracket. ie &( 
 		lDelims += "|"; // or
-		lDelims += "(\\B(?=!))"; // any non alpha/numeric boundary that is followed by an exclamation. ie &!
+		lDelims += "(\\B(?="+Operator.negationSymbol()+"))"; // any non alpha/numeric boundary that is followed by an exclamation. ie &!
 		lDelims += "|"; // or
 		lDelims += "((?<=\\))\\B)"; // any non alpha/numeric boundary (ie numeric/numeric) that follows a close bracket
 		String[] lSentence = aSentence.split(lDelims);
