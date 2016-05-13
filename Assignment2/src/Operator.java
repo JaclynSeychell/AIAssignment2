@@ -11,12 +11,12 @@ public class Operator extends ProLogic {
     
 	
 	// symbols
-	private final static String NEGATION_SYMBOL = "~";
-	private final static String CONJUNCTION_SYMBOL = "&";
-	private final static String DISJUNCTION_SYMBOL = "\\/";	// extra backslash because it's java's escape character
-	private final static String IMPLICATION_SYMBOL = "=>";
-	private final static String EQUIVALENCE_SYMBOL = "<=>";
-	private final static String LEFT_PARENTHESIS_SYMBOL = "(";
+	public final static String NEGATION_SYMBOL = "~";
+	public final static String CONJUNCTION_SYMBOL = "&";
+	public final static String DISJUNCTION_SYMBOL = "\\/";	// extra backslash because it's java's escape character
+	public final static String IMPLICATION_SYMBOL = "=>";
+	public final static String EQUIVALENCE_SYMBOL = "<=>";
+	public final static String LEFT_PARENTHESIS_SYMBOL = "(";
     
     //Determines what precedence the operator has (think BODMAS)
     private int fPrecedence;
@@ -38,12 +38,6 @@ public class Operator extends ProLogic {
         }
     }
     
-    
-    // return if the string is an operator or not
-    public static String negationSymbol()
-    {
-    	return NEGATION_SYMBOL;
-    }
     
     
     
