@@ -112,7 +112,7 @@ public class Sentence {
 	 * Manipulating Literals
 	 */
 	
-	private void addLiteral(Literal aLiteral)
+	protected void addLiteral(Literal aLiteral)
 	{
 		fLiterals.add(aLiteral);
 	}
