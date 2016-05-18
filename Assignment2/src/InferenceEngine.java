@@ -29,8 +29,14 @@ public class InferenceEngine {
 	{
 		boolean lSuccess = false;
 		    
+		if(aMethod == "TT")
+		{
+			TruthTable tt = new TruthTable(KB, fLiterals);
+		}
+		/*
 		System.out.println("Query: " + aQ);
 		System.out.println("Method: " + aMethod);
+		*/
 		lSuccess = true;
 		
 		return lSuccess;

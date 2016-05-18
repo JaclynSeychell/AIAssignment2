@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class TruthTable extends Sentence {
@@ -12,13 +13,77 @@ public class TruthTable extends Sentence {
 	private int fNumberOfLines;
 	private int fLiteralsArray [];  //Array for the literals index 
 	private int fSentencesArray[]; //Array for the sentences index 
-	private boolean lLiteralsTable[][]; //[index][row(t/f)]
+	private boolean fLiteralsTable[][]; //[index][row(t/f)]
 	private boolean lSentencesTable[][]; //[index][row(t/f)]
 	private Stack lKnownLiterals = new Stack();
 	
 	
-	public TruthTable(Literal aLiteral, ProLogic aProLogic)
+	public TruthTable(ArrayList<Sentence> aKB, ArrayList<Literal> aLiterals)
 	{
+		
+		
+		// generate full truth table
+		fLiterals = aLiterals; //	[literalIndex]
+		fLiteralsTable = new boolean[fLiterals.length][2^fLiterals.length]; //		[literalIndex][row(t/f)]
+		
+		// do same thing for sentences in aKB
+		fSentences = aKB;
+		fSentencesTable = new boolean[fSentences.length][2^fLiterals.length];
+		
+		//loop or use recursion to populate fLiteralValues array
+		//
+		//
+		
+		
+		
+		
+		
+		
+		// look for correct rows
+		
+		// loop 2^fLiterals.length times
+			
+			// loop fSentence.length times
+		
+				// init stack =0 
+		
+				// loop through each MathLogic in sentence
+					
+					// if(temp == instanceof Literal)
+						// add to stack
+					
+					// else if an Operator
+		
+						// run that operation on the stack (returns result onto stack)				
+						temp.eval(stack);
+						
+						/*
+						 * Don't do this
+						if(temp.getName() == temp.NEGATION_SYMBOL)
+						{
+							// first ting off stack
+							// negate it
+							// put it back on the stack
+						} else (){
+							
+						}
+						*/
+		
+				// end loop
+		
+				// store if row is true or false
+		
+			// end sentences loop
+		
+		// end row loop
+				
+		
+		
+		
+		
+		/*
+		
+		
 		int index;
 		int Lvalue;
 		int Svalue;
@@ -39,6 +104,16 @@ public class TruthTable extends Sentence {
 		{
 			getLiteral(fLiteralsArray[j]);
 		}	
+		
+		
+		*/
+		
+		
+		
+		
+		
+		
+		
 		
 		//Add Literals to the stack to be checked off 
 		for (int k = 0; k < lKnownLiterals.size(); k++)
