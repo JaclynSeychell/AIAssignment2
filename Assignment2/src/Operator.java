@@ -1,3 +1,4 @@
+import java.util.Stack;
 
 public class Operator extends ProLogic {
 
@@ -39,8 +40,6 @@ public class Operator extends ProLogic {
     }
     
     
-    
-    
     public Operator(String aName)
     {
         super(aName);
@@ -56,6 +55,63 @@ public class Operator extends ProLogic {
         	default:	break;
         }
         
+    }
+    
+    
+    
+    public boolean eval(Stack<Boolean> aStack) {
+    	
+    	boolean result = false;
+    	
+    	if(getName() == NEGATION_SYMBOL)
+		{
+    		boolean a = aStack.pop();
+    		
+    		result = !a;
+    		
+		}
+    	else if(getName() == CONJUNCTION_SYMBOL)
+		{
+    		boolean b = aStack.pop();
+    		boolean a = aStack.pop();
+    		
+    		result = (a && b);
+    		
+		}
+    	else if(getName() == DISJUNCTION_SYMBOL)
+		{
+    		boolean b = aStack.pop();
+    		boolean a = aStack.pop();
+    		
+    		result = (a || b);
+    		
+		}
+    	else if(getName() == IMPLICATION_SYMBOL)
+		{
+    		boolean b = aStack.pop();
+    		boolean a = aStack.pop();
+    		
+    		if(a && !b)
+    			result = false;
+    		else
+    			result = true;
+    		
+    		
+		}
+    	else if(getName() == EQUIVALENCE_SYMBOL)
+		{
+    		boolean b = aStack.pop();
+    		boolean a = aStack.pop();
+    		
+    		if( (a && !b) || (!a && b) )
+    			result = false;
+    		else
+    			result = true;
+    	
+		}
+    	
+    	aStack.push(result);
+    	return result;
     }
     
     
