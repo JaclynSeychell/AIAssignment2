@@ -9,11 +9,33 @@ public class Test_HornSentence {
 
 	
 	
+	@Test
+	public void HornSentence_RecognitionTest() throws Exception {
+		
+		Sentence lSentence;
+		
+		lSentence = new Sentence("Big&Tall=>Giant");
+		assertEquals( true, lSentence.isHornClause() );
+		
+		lSentence = new Sentence("Big&Tall<=>Giant");
+		assertEquals( false, lSentence.isHornClause() );
+		
+		lSentence = new Sentence("a&b=>~c");
+		assertEquals( false, lSentence.isHornClause() );
+		
+		lSentence = new Sentence("a&b=>c\\/d");
+		assertEquals( false, lSentence.isHornClause() );
+		
+	}
+	
+	
+	
 	
 	@Test
 	public void HornSentence_SetupLiteralsTest() throws Exception {
 		
-		HornSentence lSentence = new HornSentence("Big&Tall=>Giant");
+		Sentence lSentence = new Sentence("Big&Tall=>Giant");
+		assertEquals( true, lSentence.isHornClause() );
 		
 		String lOtherLiterals = "";
 		for( int k=0; k<lSentence.otherLiteralsLength(); k++ )

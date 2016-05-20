@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public abstract class Method {
 	
     protected ArrayList<Sentence> fKB;	// to store the knowledgebase passed in
-    protected String fResult;			// to store a string of the results to be printed to the screen
+    protected String fSolveResult;			// to store a string of the results to be printed to the screen
     
     
     public Method(ArrayList<Sentence> aKB)
@@ -13,7 +13,7 @@ public abstract class Method {
     
     public String getResult()
     {
-        return fResult;
+        return fSolveResult;
     }
     
     

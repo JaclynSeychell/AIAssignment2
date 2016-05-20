@@ -1,15 +1,21 @@
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Arrays;
+import java.util.List;
 
 public class Sentence {
 	
+	// All Sentences
 	private ArrayList<Literal> fLiterals;
 	private ArrayList<ProLogic> fRpnSentence; // this shouldn't be called math logic, it should be prologic
+	// If Horn Sentence
+	private boolean fIsHornClause = false;
+	private Literal fPositiveLiteral;
+	private ArrayList<Literal> fOtherLiterals;
 
 	public Sentence(String aSentence)
 	{
 		// setup temp variables
-		int k;
 		Stack<Operator> lOperators = new Stack<>();
 		
 		// initialise fields
@@ -20,14 +26,6 @@ public class Sentence {
 
 		aSentence = aSentence.trim(); // trim blank space off ends of whole sentence
 		
-		// couldn't get this example to work
-		
-		// "\G" means match all in string rather than stopping after the first
-		//String[] lSentence = aSentence.split("(?<=\\G(\\w+(?!\\w+)|==|<=|>=|\\+|/|\\*|-|(<|>)(?!=)))\\s*");
-		//String[] lSentence = aSentence.split("(?<=\\G(\\w+(?!\\w+)|=>|&|\\||\\+|/|\\*|-|(<|>)(?!=)))\\s*");
-		
-		
-		// so I made my own
 		
 		// "\" is always doubled because it is javascript's escape character
 		String lDelims = "";
@@ -38,13 +36,38 @@ public class Sentence {
 		lDelims += "(\\B(?="+Operator.NEGATION_SYMBOL+"))"; // any non alpha/numeric boundary that is followed by an exclamation. ie &!
 		lDelims += "|"; // or
 		lDelims += "((?<=\\))\\B)"; // any non alpha/numeric boundary (ie numeric/numeric) that follows a close bracket
-		String[] lSentence = aSentence.split(lDelims);
+		String[] temp = aSentence.split(lDelims);
+		List<String> lSentence = Arrays.asList(temp);
 		
 		
 		
 		
-		// TODO Negation should be put after the variable it applies to
-		// what about brackets, are they okay?
+		/*
+		 * This isn't necessarily true.. be careful
+		 */
+		/*
+		// If the 2nd last item in the sentence is the negation symbol and
+		// the implication symbol is the 3rd last, it's not a positive literal but
+		// we could negate both sides to create a horn clause.
+		if( 	Operator.NEGATION_SYMBOL.equals( lSentence.get(lSentence.size()-2) ) &&
+				Operator.IMPLICATION_SYMBOL.equals( lSentence.get(lSentence.size()-3) ) )
+		{
+			// remove negation symbol off right side of sentence
+			int test = lSentence.size()-2;
+			lSentence.remove(test);
+			// add negation symbol at start with brackets
+			lSentence.add(0, "(");
+			lSentence.add(0, Operator.NEGATION_SYMBOL);
+			lSentence.add(lSentence.size()-2, ")");			// close bracket before implication symbol
+		}
+		*/
+		
+		// check for horn form before RPN ordering or it gets too complicated
+		if( Operator.IMPLICATION_SYMBOL.equals( lSentence.get(lSentence.size()-2) ) || lSentence.size() == 1 )
+			fIsHornClause = true;
+		
+		
+
 		
 				
 		for(String lLogicStr : lSentence)
@@ -103,7 +126,34 @@ public class Sentence {
         	addToSentence(lOperators.pop());
         
         
+        
+        
+        
+        // if it's a horn clause, populate relevant fields
+        if(fIsHornClause)
+        {
+        	// initialise fields
+    		fOtherLiterals = new ArrayList<Literal>();
+    		
+    		// interpret other literals and positive literal
+    		fPositiveLiteral = getLiteral(literalsLength()-1);	// last literal
+    		
+    		for(int k=0; k<literalsLength()-1; k++)	// not the last one because that's the positive literal
+    			if( getLiteral(k) instanceof Literal )
+    				addOtherLiteral(getLiteral(k));
+    		// if it's a fact, fOtherLiterals will contain nothing - this is expected.
+    		
+        }
+        
 		
+	}
+	
+	
+	
+	// used to check if the sentence is a horn clause
+	public boolean isHornClause()
+	{
+		return fIsHornClause;
 	}
 	
 	
@@ -150,6 +200,39 @@ public class Sentence {
 	}
 	
 	
+	
+	
+	
+	// Horn Clauses
+	
+	/*
+	 * Manipulate Positive Literal
+	 */
+
+	public Literal getPositiveLiteral()
+	{
+		return fPositiveLiteral;
+	}
+	
+	
+	/*
+	 * Manipulating Other Literals
+	 */
+	
+	private void addOtherLiteral(Literal aLiteral)
+	{
+		fOtherLiterals.add(aLiteral);
+	}
+	
+	public Literal getOtherLiteral(int aIndex)
+	{
+		return fOtherLiterals.get(aIndex);
+	}
+	
+	public int otherLiteralsLength()
+	{
+		return fOtherLiterals.size();
+	}
 	
 	
 }
