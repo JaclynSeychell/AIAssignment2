@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class InferenceEngine {
 
-	private ArrayList<Sentence> fKnowledgeBase;
-	private ArrayList<Literal> fLiterals;
+	public ArrayList<Sentence> fKnowledgeBase;
+	public ArrayList<Literal> fLiterals;
 	
 	// Constructor accepts a string containing the whole knowledgebase
 	// It splits up the string by semi-colons to create sentences and put them in a Knowledgebase field as a collection of sentences
