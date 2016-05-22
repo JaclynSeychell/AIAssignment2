@@ -2,19 +2,24 @@ import java.util.ArrayList;
 
 public class ForwardChaining extends Method {
 	
-	String fQuery;
+	Literal fQuery;
 	ArrayList<Sentence> fChainSteps;
 	
-	public ForwardChaining(ArrayList<Sentence> aKB, String aQ)
+	public ForwardChaining(ArrayList<Sentence> aKB, Literal aQuery)
 	{
 		super(aKB);		// save the knowledgebase using the superclasses constructor
-		fQuery = aQ;
+		fQuery = aQuery;
 	}
 	
+	
+	
+	// Finds steps in the chain that can be used to solve the query
+	// Saves those steps in fChainSteps
+	// returns true if the query can be solves or false if not 
 	@Override
-	public boolean solve()
+	public boolean isSolvable()
 	{
-		boolean result = false;
+		// fReadyToSolve is initialised to false;
 		
 		
 		// check everything in aKB is a horn sentence
@@ -22,47 +27,100 @@ public class ForwardChaining extends Method {
 		{
 			if(!lSentence.isHornClause())
 			{
-				fSolveResult = "Not all sentences are Horn Clauses";
+				// TODO: throw an error here
+				//"Not all sentences are Horn Clauses - Cannot use Forward Chaining";
 				return false;	// abort the process
 			}
 		}
 		
 		
-		// create unknownSentences = aKB (copy values not references)
+		
+		
+		ArrayList<Sentence> lUnknownSentences = fKB;
 		fChainSteps = new ArrayList<>();
 		
 		// create knownLiterals array;
 		ArrayList<Literal> knownLiterals = new ArrayList<>();
 		
-		// SentenceLoop:
-		// loop unknownSentences sentences repeatedly (while true)
 		
-			// loop through otherLiterals
-		
-				// if literal is not in knownLiterals
-					// continue SentenceLoop;	// abandon sentence
-		
-			// end otherLiterals loop
+		SearchLoop:
+		while(!lUnknownSentences.isEmpty())	// keep looping while there are sentences unknown
+		{
+			int lPrevKnownNum = knownLiterals.size();
 			
-			// this is only reached if there are no unknown literals in otherliterals
-			// put positiveLiteral into knownLiterals list
-			// remove sentence from unknownSentences & add sentence to chainSteps 
-		
-			// if positiveLiteral.getName() = fQuery
-				//break SentenceLoop
-		
-		// endloop
+			
+			// loop all sentences left with unknown positiveLiterals
+			SentenceLoop:
+			for( Sentence lSentence : lUnknownSentences )
+			{
+				// loop through otherLiterals
+				for( int k=0; k<lSentence.otherLiteralsLength(); k++)
+				{
+					// if literal is not in knownLiterals
+					if( !knownLiterals.contains( lSentence.getOtherLiteral(k) ) )
+						continue SentenceLoop;	// abandon sentence
+				}
 				
 				
+				// this is only reached if all left hand side literals are known
+				
+				// put positiveLiteral into knownLiterals list
+				knownLiterals.add( lSentence.getPositiveLiteral() );
+				
+				// add sentence to chainSteps
+				fChainSteps.add(lSentence);
+			
+				// if we found the result then no need to search anymore
+				if(lSentence.getPositiveLiteral() == fQuery )
+				{
+					fReadyToSolve = true;
+					break SearchLoop;
+				}
+			
+			}
+			
+			// remove new found sentences from unknownSentences
+			for(int k=fChainSteps.size()-1; k>=0; k--) // lPrevKnownNum+1
+			{
+				lUnknownSentences.remove( fChainSteps.get(k) );
+			}
+			
+			
+			// if we've looked at ALL the sentences and haven't found another link, it can't be solved
+			if( knownLiterals.size() == lPrevKnownNum)
+				break SearchLoop;
 		
+		}
+				
 		
-		// iterate through chainSteps to create fSolveResult
-		
-		
-		
-		
-		
-		
-		return result;
+		return fReadyToSolve;
 	}
+	
+	
+	@Override
+	public String printSolutionList()
+	{
+		String lMessage = "";
+		
+		if(!fChainSteps.isEmpty())
+		{
+			
+			for(int k=0; k<fChainSteps.size(); k++ )
+			{
+				Sentence lSentence = fChainSteps.get(k);
+				
+				if(k!=0)	lMessage += ", ";
+				lMessage +=	lSentence.getPositiveLiteral().getName();
+			}
+		
+		}
+		
+		return lMessage;
+	}
+	
+	
+	
+	
+	
+	
 }

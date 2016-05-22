@@ -12,6 +12,7 @@ public class Sentence {
 	private boolean fIsHornClause = false;
 	private Literal fPositiveLiteral;
 	private ArrayList<Literal> fOtherLiterals;
+	private String fName;
 
 	public Sentence(String aSentence)
 	{
@@ -19,6 +20,7 @@ public class Sentence {
 		Stack<Operator> lOperators = new Stack<>();
 		
 		// initialise fields
+		fName = aSentence;
 		fRpnSentence = new ArrayList<ProLogic>();	//?? do I need to redefine the <type> here? - seemed to not error without it
 		fLiterals = new ArrayList<Literal>();
 		
@@ -63,8 +65,32 @@ public class Sentence {
 		*/
 		
 		// check for horn form before RPN ordering or it gets too complicated
-		if( Operator.IMPLICATION_SYMBOL.equals( lSentence.get(lSentence.size()-2) ) || lSentence.size() == 1 )
+		if( lSentence.size() == 1) {	// sentence has 1 element
+			// it's a fact, but it's still got a positive literal
 			fIsHornClause = true;
+		} 
+		else if( lSentence.size() >= 3 && Operator.IMPLICATION_SYMBOL.equals( lSentence.get(lSentence.size()-2).trim() ) )	// sentence has 3 elements
+		{
+			// the implication symbol is the last item in the normal order sentence
+			fIsHornClause = true;
+			
+			// but if there's others in there as well (or equivalence) it's not horn
+			for(int k=0; k<lSentence.size()-2; k++)
+			{
+				if( 	Operator.IMPLICATION_SYMBOL.equals( lSentence.get(k).trim() ) ||
+						Operator.EQUIVALENCE_SYMBOL.equals( lSentence.get(k).trim() )
+						)
+					fIsHornClause = false;
+			}
+			
+			
+		}
+		else
+		{
+			// sentence has 2 elements
+			// this isn't valid (unless it's just a negated literal, but that doesn't make much sense either)
+			fIsHornClause = false;
+		}
 		
 		
 
@@ -129,6 +155,8 @@ public class Sentence {
         
         
         
+        
+        
         // if it's a horn clause, populate relevant fields
         if(fIsHornClause)
         {
@@ -150,11 +178,23 @@ public class Sentence {
 	
 	
 	
-	// used to check if the sentence is a horn clause
-	public boolean isHornClause()
+	
+	
+	public String getName()
 	{
-		return fIsHornClause;
+		return fName;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -176,6 +216,49 @@ public class Sentence {
 	{
 		return fLiterals.size();
 	}
+	
+	// replaces the literal in all lists with a new literal
+	// used for unifying literal objects across sentences
+	public void replaceLiteral(Literal origL, Literal newL) {
+		// replace all instances in fLiterals
+		replaceLiteralIn(origL,newL,fLiterals);
+		
+		// replace all instances in fRpnSentence
+		for(int k=0; k<fRpnSentence.size(); k++)
+		{
+			if( fRpnSentence.get(k) == origL )
+			{
+				fRpnSentence.remove(origL);
+				fRpnSentence.add(k, newL);
+			}
+		}
+		
+		
+		// if it's a horn clause, do those ArrayLists too
+		if(fIsHornClause)
+		{
+			// replace all instances in fOtherLiterals
+			replaceLiteralIn(origL,newL,fOtherLiterals);
+			// replace fPositiveLiteral
+			if(fPositiveLiteral==origL)
+				fPositiveLiteral = newL;
+		}
+	}
+	
+	private void replaceLiteralIn(Literal origL, Literal newL, ArrayList<Literal> aList)
+	{
+		for(int k=0; k<aList.size(); k++)
+		{
+			if( aList.get(k) == origL )
+			{
+				aList.remove(origL);
+				aList.add(k, newL);
+			}
+		}
+	}
+	
+	
+	
 	
 	
 	
@@ -205,6 +288,10 @@ public class Sentence {
 	
 	// Horn Clauses
 	
+	public boolean isHornClause() {
+		return fIsHornClause;
+	}
+	
 	/*
 	 * Manipulate Positive Literal
 	 */
@@ -233,6 +320,16 @@ public class Sentence {
 	{
 		return fOtherLiterals.size();
 	}
+
+
+
+
+
+	
+
+
+
+	
 	
 	
 }

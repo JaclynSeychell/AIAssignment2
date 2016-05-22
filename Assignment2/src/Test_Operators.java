@@ -2,8 +2,6 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class Test_Operators {
@@ -192,7 +190,6 @@ public class Test_Operators {
 
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;
-		boolean lResult;
 		
 		lStack.push(true);
 		lStack.push(false);

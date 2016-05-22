@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class Main {
@@ -39,7 +38,7 @@ public class Main {
             	} else if(lLine.equals("ASK"))
             	{
             		// the very next line has to be the query
-            		lQ = lBuffer.readLine();
+            		lQ = lBuffer.readLine().trim();
             		continue;	// could technically break here as long as the TRY is always before the ASK
             		
             	}
