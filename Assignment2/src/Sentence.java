@@ -64,8 +64,10 @@ public class Sentence {
 		}
 		*/
 		
+		
+		
 		// check for horn form before RPN ordering or it gets too complicated
-		if( lSentence.size() == 1) {	// sentence has 1 element
+		if( lSentence.size() == 1 ) {	// sentence has 1 element
 			// it's a fact, but it's still got a positive literal
 			fIsHornClause = true;
 		} 

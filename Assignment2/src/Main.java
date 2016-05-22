@@ -51,7 +51,7 @@ public class Main {
             
             InferenceEngine iEngine = new InferenceEngine(lKB);
             
-            iEngine.solve(lQ, aMethod);
+            iEngine.prepareSolution(lQ, aMethod);
             
         }
         catch(IOException ioe)

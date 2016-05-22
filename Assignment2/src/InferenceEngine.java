@@ -76,7 +76,7 @@ public class InferenceEngine {
   
   
 	// this takes the Query string and solves it according to the method specified
-	public boolean solve(String aQ, String aMethod)
+	public boolean prepareSolution(String aQ, String aMethod)
 	{
 		
 		Method lMethod;
@@ -106,7 +106,7 @@ public class InferenceEngine {
 		if(lSuccess)
 			System.out.println( "YES: " + lMethod.printSolutionList() );
 		else
-			System.out.println( "NO: " + lMethod.printSolutionList() );
+			System.out.println( "NO" );
 
 		
 		

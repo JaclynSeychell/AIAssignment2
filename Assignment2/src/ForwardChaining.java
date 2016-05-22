@@ -19,7 +19,7 @@ public class ForwardChaining extends Method {
 	@Override
 	public boolean isSolvable()
 	{
-		// fReadyToSolve is initialised to false;
+		// fReadyToSolve is initialised to false in parent class;
 		
 		
 		// check everything in aKB is a horn sentence
@@ -99,8 +99,11 @@ public class ForwardChaining extends Method {
 	
 	@Override
 	public String printSolutionList()
-	{
+	{		
 		String lMessage = "";
+		
+		if(!fReadyToSolve)	// a solution wasn't found - so don't print the steps found
+			return lMessage;
 		
 		if(!fChainSteps.isEmpty())
 		{
