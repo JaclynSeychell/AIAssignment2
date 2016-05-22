@@ -50,17 +50,16 @@ public class TruthTable extends Method {
 				
 				// loop through each MathLogic in sentence(get from sentence)
 				
-				for( int k = 0; k < fSentences.size(); k++)
+				Sentence currentSentence = fSentences.get(j);
+				for( int k = 0; k < currentSentence.sentenceLength(); k++)
 				{
-					ProLogic item = item.getFromSentence(k);
+					ProLogic item = currentSentence.getFromSentence(k);
 					
 					// if(temp == instanceof Literal)
 					// add to stack
 					if( item instanceof Literal)
 					{
-			
-						lCurrentLiterals.push(getValueFromTT(item,row));
-						
+						lCurrentLiterals.push(getValueFromTT((Literal)item ,row));
 					}
 					// else if an Operator
 					else if (item instanceof Operator)
@@ -68,7 +67,6 @@ public class TruthTable extends Method {
 						// run that operation on the stack (returns result onto stack)				
 						((Operator) item).eval(lCurrentLiterals);
 					}
-					
 				// end current sentence loop
 				}
 				
@@ -93,19 +91,22 @@ public class TruthTable extends Method {
 	
 	private Boolean getValueFromTT(ProLogic item, int row)
 	{
-		if( item == null)
-		{
-			return false;
-		}
-		else
-		{
-			
-		}
+		//find integer that correlates to literal passed in
+		//loop through fLiterals until found
 		
-		return null;
+		for (int i = 0; i < fLiterals.size(); i++)
+		{
+			if( fLiterals.get(i) == item)
+			{
+				//index = column of truth table
+				//return bool in truthtable at [col][row]
+				return fLiteralsTable[i][row];
+			}
+		}
+		return true;	
 	}
 
-	public  void printTruthTable(int n) 
+	public void printTruthTable(int n) 
 	{
 		//uses to binary string to convert to 1 and 0
 		for (int i = 0 ; i != (1 << n) ; i++) 
@@ -120,5 +121,18 @@ public class TruthTable extends Method {
 	}
 		
 
+	public void countTrueValues()
+	{
+		//check to see if the truth table result has any true values
+		//output yes or no and value 
+		if(trueValues >= 1)
+		{
+			System.out.println("YES: "+ trueValues);
+		}
+		else
+		{
+			System.out.println("NO: " + trueValues);
+		}
+	}
 	
 }
