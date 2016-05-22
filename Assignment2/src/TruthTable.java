@@ -10,13 +10,8 @@ public class TruthTable extends Method {
 	//evaluate for T/F of each sentence
 	//calculate all the T for the whole KB
 	
-	
-	//private int fLiteralsArray [];  //Array for the literals index 
-	//private int fSentencesArray[]; //Array for the sentences index 
 	private boolean fLiteralsTable[][]; //[index][row(t/f)]
 	private boolean fSentencesTable[][]; //[index][row(t/f)]
-	
-	
 	private ArrayList<Literal> fLiterals;
 	private ArrayList<Sentence> fSentences;
 	private int trueValues;
@@ -36,13 +31,10 @@ public class TruthTable extends Method {
 		trueValues = 0;
 		
 		//loop or use recursion to populate fLiteralValues array
-		//
-		//
-		//printTruthTable(fLiterals.size());
-		//printTruthTable(sentenceslength());
+	
+		printTruthTable(fLiterals.size());
+		printTruthTable(fSentences.size());
 
-		
-	/*
 		// look for correct rows
 		
 		// loop 2^fLiterals.length times
@@ -50,24 +42,23 @@ public class TruthTable extends Method {
 		{
 			boolean rowValid = true;
 			
-			for (int j = 0; j < sentenceLength(); j++)
+			for (int j = 0; j < fSentences.size(); j++)
 			// loop fSentence.length times
 			{
 				// init stack =0 
 				Stack<Boolean> lCurrentLiterals = new Stack<Boolean>();
 				
 				// loop through each MathLogic in sentence(get from sentence)
-					
-				for( int k = 0; k < sentenceLength(); k++)
+				
+				for( int k = 0; k < fSentences.size(); k++)
 				{
-					ProLogic item = getFromSentence(k);
+					ProLogic item = item.getFromSentence(k);
 					
 					// if(temp == instanceof Literal)
 					// add to stack
-					if( item instanceof fLiterals)
+					if( item instanceof Literal)
 					{
-						//lKnownLiterals.push(k);
-						//getValueFromTT(item,row);
+			
 						lCurrentLiterals.push(getValueFromTT(item,row));
 						
 					}
@@ -75,11 +66,9 @@ public class TruthTable extends Method {
 					else if (item instanceof Operator)
 					{
 						// run that operation on the stack (returns result onto stack)				
-						k.eval(lCurrentLiterals);
+						((Operator) item).eval(lCurrentLiterals);
 					}
 					
-						
-				
 				// end current sentence loop
 				}
 				
@@ -89,8 +78,7 @@ public class TruthTable extends Method {
 				if(lCurrentLiterals.peek()== false)
 				{
 					rowValid = false;
-				}
-				
+				}	
 			// end all sentences loop
 			}
 			
@@ -99,46 +87,38 @@ public class TruthTable extends Method {
 			{
 				trueValues++;
 			}
-			
 		// end row loop
 		}		
-		*/
-			
-		
 	}
 	
-	public  void printTruthTable(int n) {
+	private Boolean getValueFromTT(ProLogic item, int row)
+	{
+		if( item == null)
+		{
+			return false;
+		}
+		else
+		{
+			
+		}
 		
-		//Method from the internet, using recursion
+		return null;
+	}
+
+	public  void printTruthTable(int n) 
+	{
 		//uses to binary string to convert to 1 and 0
-		for (int i = 0 ; i != (1 << n) ; i++) {
+		for (int i = 0 ; i != (1 << n) ; i++) 
+		{
 		    String s = Integer.toBinaryString(i);
-		    while (s.length() != n) {
+		    while (s.length() != n) 
+		    {
 		        s = '0'+s;
 		    }
 		    System.out.println(s);
 		}
 	}
 		
-		//My method using recursion, calculating the amount of rows need from
-		//givin input,  then looping over the amount of rows to print out 
-		//alternating of 1 and 0 using mod 2.
-	
-		/*int rows = (int) Math.pow(2,n);
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = n - 1; j >= 0; j--) {
-                System.out.print((i/(int) Math.pow(2, j))%2 + " ");
-            }
-            System.out.println();
-        }
-	}
-   */
-	
-	
-	
-
-	
 
 	
 }
