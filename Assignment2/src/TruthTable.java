@@ -10,7 +10,7 @@ public class TruthTable extends Method {
 	//evaluate for T/F of each sentence
 	//calculate all the T for the whole KB
 	
-	private boolean fLiteralsTable[][]; //[index][row(t/f)]
+	private boolean fLiteralsTable[][]; //[index][row(t/f)] TRUTH TABLE < -
 	private boolean fSentencesTable[][]; //[index][row(t/f)]
 	private ArrayList<Literal> fLiterals;
 	private ArrayList<Sentence> fSentences;
@@ -32,12 +32,61 @@ public class TruthTable extends Method {
 		
 		//loop or use recursion to populate fLiteralValues array
 	
-		printTruthTable(fLiterals.size());
-		printTruthTable(fSentences.size());
-
-		// look for correct rows
+		createTruthTable(fLiterals.size()); 
+	}
+	
+	private Boolean getValueFromTT(ProLogic item, int row)
+	{
+		//find integer that correlates to literal passed in
+		//loop through fLiterals until found
 		
-		// loop 2^fLiterals.length times
+		for (int i = 0; i < fLiterals.size(); i++)
+		{
+			if( fLiterals.get(i) == item)
+			{
+				//index = column of truth table
+				//return bool in truthtable at [col][row]
+				return fLiteralsTable[i][row];
+			}
+		}
+		return true;	
+	}
+
+	public void createTruthTable(int n) 
+	{
+		//uses to binary string to convert to 1 and 0
+		for (int i = 0 ; i != (1 << n) ; i++) 
+		{
+		    String s = Integer.toBinaryString(i);
+		    while (s.length() != n) 
+		    {
+		        s = '0'+s;
+		    }
+		    System.out.println(s);
+		}
+	}
+		
+
+	public void countTrueValues()
+	{
+		//check to see if the truth table result has any true values
+		//output yes or no and value 
+		if(trueValues >= 1)
+		{
+			System.out.println("YES: "+ trueValues);
+		}
+		else
+		{
+			System.out.println("NO: " + trueValues);
+		}
+	}
+	
+	
+	// look for correct rows
+	// loop 2^fLiterals.length times
+	//overwrite isSolveable method to include this 
+	public overwrite void isSolvable()
+	{
 		for( int row = 0; row < (int) Math.pow(2,fLiterals.size()); row++)
 		{
 			boolean rowValid = true;
@@ -88,51 +137,4 @@ public class TruthTable extends Method {
 		// end row loop
 		}		
 	}
-	
-	private Boolean getValueFromTT(ProLogic item, int row)
-	{
-		//find integer that correlates to literal passed in
-		//loop through fLiterals until found
-		
-		for (int i = 0; i < fLiterals.size(); i++)
-		{
-			if( fLiterals.get(i) == item)
-			{
-				//index = column of truth table
-				//return bool in truthtable at [col][row]
-				return fLiteralsTable[i][row];
-			}
-		}
-		return true;	
-	}
-
-	public void printTruthTable(int n) 
-	{
-		//uses to binary string to convert to 1 and 0
-		for (int i = 0 ; i != (1 << n) ; i++) 
-		{
-		    String s = Integer.toBinaryString(i);
-		    while (s.length() != n) 
-		    {
-		        s = '0'+s;
-		    }
-		    System.out.println(s);
-		}
-	}
-		
-
-	public void countTrueValues()
-	{
-		//check to see if the truth table result has any true values
-		//output yes or no and value 
-		if(trueValues >= 1)
-		{
-			System.out.println("YES: "+ trueValues);
-		}
-		else
-		{
-			System.out.println("NO: " + trueValues);
-		}
-	}
-	
 }
