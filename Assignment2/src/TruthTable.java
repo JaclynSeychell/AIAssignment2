@@ -33,6 +33,7 @@ public class TruthTable extends Method {
 		//loop or use recursion to populate fLiteralValues array
 	
 		createTruthTable(fLiterals.size()); 
+		countTrueValues();
 	}
 	
 	private Boolean getValueFromTT(ProLogic item, int row)
@@ -62,7 +63,10 @@ public class TruthTable extends Method {
 		    {
 		        s = '0'+s;
 		    }
-		    System.out.println(s);
+		    
+		    //System.out.println(s); STORE S in a variable 
+		    //What varibale shoukd be used to store in truth table??
+		   fLiteralsTable[n][s];
 		}
 	}
 		
@@ -84,8 +88,8 @@ public class TruthTable extends Method {
 	
 	// look for correct rows
 	// loop 2^fLiterals.length times
-	//overwrite isSolveable method to include this 
-	public overwrite void isSolvable()
+	@Override
+	public boolean isSolvable()
 	{
 		for( int row = 0; row < (int) Math.pow(2,fLiterals.size()); row++)
 		{
@@ -135,6 +139,9 @@ public class TruthTable extends Method {
 				trueValues++;
 			}
 		// end row loop
-		}		
+		}
+		return fReadyToSolve;		
 	}
+	
+	
 }
