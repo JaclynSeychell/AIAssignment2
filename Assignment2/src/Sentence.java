@@ -13,6 +13,8 @@ public class Sentence {
 	private Literal fPositiveLiteral;
 	private ArrayList<Literal> fOtherLiterals;
 	private String fName;
+	private boolean fValue;
+	private boolean fHasValue = false;
 
 	public Sentence(String aSentence)
 	{
@@ -259,6 +261,36 @@ public class Sentence {
 		}
 	}
 	
+	
+	
+	
+	/*
+	 * Manipulating the value
+	 */
+	
+	public void setValue(Boolean aValue)
+	{
+		fValue = aValue;
+		fHasValue = true;
+	}
+	
+	public Boolean getValue()
+	{
+		//if(!fHasValue)
+			// TODO: throw an error
+			
+		return fValue;
+	}
+	
+	public void clearValue()
+	{
+		fHasValue = false;
+	}
+	
+	public Boolean hasValue()
+	{
+		return fHasValue;
+	}
 	
 	
 	

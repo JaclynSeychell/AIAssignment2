@@ -18,7 +18,7 @@ public class BackwardChaining extends Method {
 	// Saves those steps in fChainSteps
 	// returns true if the query can be solved or false if not 
 	@Override
-	public boolean isSolvable()
+	public boolean prepareSolution()
 	{
 		// fReadyToSolve is initialised to false in parent class;
 		
@@ -88,7 +88,7 @@ public class BackwardChaining extends Method {
 					if(lNeededLiterals.isEmpty())
 					{
 						// then no need to search anymore
-						fReadyToSolve = true;
+						solutionPrepared = true;
 						break NeededLiteralLoop;
 					} else {
 						// otherwise, skip to the next literal needed
@@ -114,7 +114,7 @@ public class BackwardChaining extends Method {
 		} // NeededLiteralLoop end
 		
 		
-		return fReadyToSolve;
+		return solutionPrepared;
 	}
 	
 	

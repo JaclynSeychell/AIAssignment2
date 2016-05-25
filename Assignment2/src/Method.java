@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public abstract class Method {
 	
     protected ArrayList<Sentence> fKB;	// to store the knowledgebase passed in
-    protected boolean fReadyToSolve = false;
+    protected boolean solutionPrepared = false;
     
     public Method(ArrayList<Sentence> aKB)
     {
@@ -18,7 +18,7 @@ public abstract class Method {
     
     
     // to be overridden by extending classes
-    public boolean isSolvable()
+    public boolean prepareSolution()
     {
     	// override this function for each method that extends this class
     	return false;

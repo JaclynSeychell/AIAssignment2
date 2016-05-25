@@ -23,7 +23,7 @@ public class Test_BackwardChaining {
 		
 		BackwardChaining lMethod = new BackwardChaining(lKB, lQueryLiteral);
 		
-		assertFalse( lMethod.isSolvable() );	// check it doesn't solve it
+		assertFalse( lMethod.prepareSolution() );	// check it doesn't solve it
 		
 	}
 	
@@ -39,7 +39,7 @@ public class Test_BackwardChaining {
 		
 		BackwardChaining lMethod = new BackwardChaining(lKB, lQueryLiteral);
 		
-		assertFalse( lMethod.isSolvable() );	// check it doesn't solve it
+		assertFalse( lMethod.prepareSolution() );	// check it doesn't solve it
 		
 	}
 	
@@ -55,7 +55,7 @@ public class Test_BackwardChaining {
 		
 		BackwardChaining lMethod = new BackwardChaining(lKB, lQueryLiteral);
 		
-		assertFalse( lMethod.isSolvable() );	// check it doesn't solve it
+		assertFalse( lMethod.prepareSolution() );	// check it doesn't solve it
 		
 	}
 	

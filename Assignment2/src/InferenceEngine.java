@@ -87,21 +87,21 @@ public class InferenceEngine {
 		
 		switch(aMethod)
 		{
-			//case "TT":	lMethod = new TruthTable(fKnowledgeBase, fLiterals);
-			//			break;
+			case "TT":	lMethod = new TruthTable(fKnowledgeBase, fLiterals);
+						break;
 						
 			case "FC":	lMethod = new ForwardChaining(fKnowledgeBase, lQuery);
 						break;
 						
-			//case "BC":	lMethod = new BackwardChaining(fKnowledgeBase, lQuery);
-			//			break;
+			case "BC":	lMethod = new BackwardChaining(fKnowledgeBase, lQuery);
+						break;
 						
 			default:	System.out.println("No valid method chosen.");
 						return false;	// exit here if not a valid method
 		}
 		
 		// solve and print result
-		lSuccess = lMethod.isSolvable();
+		lSuccess = lMethod.prepareSolution();
 		
 		if(lSuccess)
 			System.out.println( "YES: " + lMethod.printSolutionList() );
@@ -114,6 +114,22 @@ public class InferenceEngine {
 		//System.out.println("Method: " + aMethod);
 		
 		return lSuccess;
+	}
+	
+	
+	
+	public String solve(String aValues, String aMethod)
+	{
+		String[] lValues = aValues.split(";");
+		
+		// find value for each (split by =
+		
+		// then set in literals and apply trim
+		
+		// start method to solve
+		
+		// output result
+		return "result";
 	}
 	
 	

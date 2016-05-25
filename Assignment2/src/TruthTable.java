@@ -11,7 +11,6 @@ public class TruthTable extends Method {
 	//calculate all the T for the whole KB
 	
 	private boolean fLiteralsTable[][]; //[index][row(t/f)] TRUTH TABLE < -
-	private boolean fSentencesTable[][]; //[index][row(t/f)]
 	private ArrayList<Literal> fLiterals;
 	private ArrayList<Sentence> fSentences;
 	private int trueValues;
@@ -22,21 +21,24 @@ public class TruthTable extends Method {
 		
 		// generate full truth table
 		fLiterals = aLiterals; //	[literalIndex]
-		fLiteralsTable = new boolean[fLiterals.size()][(int) Math.pow(2,fLiterals.size())]; //		[literalIndex][row(t/f)]
 		
 		// do same thing for sentences in aKB
 		fSentences = aKB;
-		fSentencesTable = new boolean[fSentences.size()][(int) Math.pow(2,fLiterals.size())];
+		//fSentencesTable = new boolean[fSentences.size()][(int) Math.pow(2,fLiterals.size())];
 	
 		trueValues = 0;
 		
 		//loop or use recursion to populate fLiteralValues array
 	
 		createTruthTable(fLiterals.size()); 
-		countTrueValues();
+		
 	}
 	
-	private Boolean getValueFromTT(ProLogic item, int row)
+	
+	
+	
+	
+	private Boolean getValueFromTT(int row, Literal item)
 	{
 		//find integer that correlates to literal passed in
 		//loop through fLiterals until found
@@ -47,59 +49,68 @@ public class TruthTable extends Method {
 			{
 				//index = column of truth table
 				//return bool in truthtable at [col][row]
-				return fLiteralsTable[i][row];
+				return fLiteralsTable[row][i];
 			}
 		}
 		return true;	
 	}
 
+	
+	
+	
+	
 	public void createTruthTable(int totalCols) 
 	{
 		//uses to binary string to convert to 1 and 0
+		int totalRows =  (int)Math.pow(2,totalCols);
 		
-		for (int cel = 0 ; cel < Math.pow(2,totalCols) * totalCols ; cel++) 
+		fLiteralsTable = new boolean[totalRows][totalCols];
+		
+		for (int cel = 0 ; cel < (totalRows*totalCols) ; cel++) 
 		{
 			int row = (int)Math.ceil(cel / totalCols);
 			int col = cel%totalCols;
 			
-			System.out.println(row + " "+ col);
+			String s = Integer.toBinaryString(cel);
 			
-		    String s = Integer.toBinaryString(cel);
-		    
-		    while (s.length() <= totalCols) 
-		    {
-		        s = '0'+s;
+			while (s.length() <= totalCols) 
+			{
+			    s = '0'+s;
 		    }
-		    
-		    //System.out.println(s); STORE S in a variable 
-		    //What varibale shoukd be used to store in truth table??
-		    
-		   //fLiteralsTable[row][col] = s.charAt(col);
 		   
-		    
-		   if( s.charAt(totalCols) == '1')
+		   if( s.charAt(col) == '1')
 		   {
-			   fLiteralsTable[cel][totalCols] = true;
+			   fLiteralsTable[row][col] = true;
 		   }
 		   else
 		   {
-			   fLiteralsTable[cel][totalCols] = false;
+			   fLiteralsTable[row][col] = false;
 		   }
+		   
 		}
 	}
 	
-	public void printTruthTable()
+	
+	
+	public String getTruthTable()
 	{
+		String result = "";
 		for (int row = 0; row < fLiteralsTable.length; row++)
 		{
 			for (int col= 0; col < fLiteralsTable[row].length; col++)
 			{
-				System.out.print(fLiteralsTable[row][col]);
+				if(fLiteralsTable[row][col])
+					result+="1";
+				else
+					result+="0";
 			}
-			System.out.println();
 		}
+		return result;
 	}
 		
+	
+	
+	
 
 	public void countTrueValues()
 	{
@@ -116,24 +127,29 @@ public class TruthTable extends Method {
 	}
 	
 	
+	
+	
+	
+	
 	// look for correct rows
 	// loop 2^fLiterals.length times
 	@Override
-	public boolean isSolvable()
+	public boolean prepareSolution()
 	{
-		for( int row = 0; row < (int) Math.pow(2,fLiterals.size()); row++)
+		
+		
+		for( int row = 0; row < fLiteralsTable.length; row++)
 		{
 			boolean rowValid = true;
 			
-			for (int j = 0; j < fSentences.size(); j++)
+			for (int sIndex = 0; sIndex < fSentences.size(); sIndex++)
 			// loop fSentence.length times
 			{
-				// init stack =0 
+				Sentence currentSentence = fSentences.get(sIndex);
 				Stack<Boolean> lCurrentLiterals = new Stack<Boolean>();
 				
-				// loop through each MathLogic in sentence(get from sentence)
 				
-				Sentence currentSentence = fSentences.get(j);
+				// loop through each ProLogic in sentence(get from sentence)
 				for( int k = 0; k < currentSentence.sentenceLength(); k++)
 				{
 					ProLogic item = currentSentence.getFromSentence(k);
@@ -142,7 +158,7 @@ public class TruthTable extends Method {
 					// add to stack
 					if( item instanceof Literal)
 					{
-						lCurrentLiterals.push(getValueFromTT((Literal)item ,row));
+						lCurrentLiterals.push( getValueFromTT(row,(Literal)item) );
 					}
 					// else if an Operator
 					else if (item instanceof Operator)
@@ -151,10 +167,10 @@ public class TruthTable extends Method {
 						((Operator) item).eval(lCurrentLiterals);
 					}
 				// end current sentence loop
-				}
+				} 
 				
 				if(lCurrentLiterals.size() != 1)
-					System.out.println("No sentence found");
+					System.out.println("Sentence invalid");
 					
 				if(lCurrentLiterals.peek()== false)
 				{
@@ -170,7 +186,8 @@ public class TruthTable extends Method {
 			}
 		// end row loop
 		}
-		return fReadyToSolve;		
+
+		return solutionPrepared;		
 	}
 	
 	

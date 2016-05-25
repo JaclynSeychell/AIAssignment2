@@ -59,18 +59,18 @@ public class Operator extends ProLogic {
     
     
     
-    public boolean eval(Stack<Boolean> aStack) {
+    public void eval(Stack<Boolean> aStack) {
     	
     	boolean result = false;
     	
-    	if(getName() == NEGATION_SYMBOL)
+    	if(NEGATION_SYMBOL.equals(getName()))
 		{
     		boolean a = aStack.pop();
     		
     		result = !a;
     		
 		}
-    	else if(getName() == CONJUNCTION_SYMBOL)
+    	else if(CONJUNCTION_SYMBOL.equals(getName()))
 		{
     		boolean b = aStack.pop();
     		boolean a = aStack.pop();
@@ -78,7 +78,7 @@ public class Operator extends ProLogic {
     		result = (a && b);
     		
 		}
-    	else if(getName() == DISJUNCTION_SYMBOL)
+    	else if(DISJUNCTION_SYMBOL.equals(getName()))
 		{
     		boolean b = aStack.pop();
     		boolean a = aStack.pop();
@@ -86,7 +86,7 @@ public class Operator extends ProLogic {
     		result = (a || b);
     		
 		}
-    	else if(getName() == IMPLICATION_SYMBOL)
+    	else if(IMPLICATION_SYMBOL.equals(getName()))
 		{
     		boolean b = aStack.pop();
     		boolean a = aStack.pop();
@@ -98,7 +98,7 @@ public class Operator extends ProLogic {
     		
     		
 		}
-    	else if(getName() == EQUIVALENCE_SYMBOL)
+    	else if(EQUIVALENCE_SYMBOL.equals(getName()))
 		{
     		boolean b = aStack.pop();
     		boolean a = aStack.pop();
@@ -111,7 +111,6 @@ public class Operator extends ProLogic {
 		}
     	
     	aStack.push(result);
-    	return result;
     }
     
     

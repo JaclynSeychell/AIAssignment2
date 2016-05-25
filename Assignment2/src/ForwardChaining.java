@@ -17,7 +17,7 @@ public class ForwardChaining extends Method {
 	// Saves those steps in fChainSteps
 	// returns true if the query can be solves or false if not 
 	@Override
-	public boolean isSolvable()
+	public boolean prepareSolution()
 	{
 		// fReadyToSolve is initialised to false in parent class;
 		
@@ -73,7 +73,7 @@ public class ForwardChaining extends Method {
 				// if we found the result then no need to search anymore
 				if(lSentence.getPositiveLiteral() == fQuery )
 				{
-					fReadyToSolve = true;
+					solutionPrepared = true;
 					break SearchLoop;
 				}
 			
@@ -93,7 +93,7 @@ public class ForwardChaining extends Method {
 		}
 				
 		
-		return fReadyToSolve;
+		return solutionPrepared;
 	}
 	
 	
@@ -102,7 +102,7 @@ public class ForwardChaining extends Method {
 	{		
 		String lMessage = "";
 		
-		if(!fReadyToSolve)	// a solution wasn't found - so don't print the steps found
+		if(!solutionPrepared)	// a solution wasn't found - so don't print the steps found
 			return lMessage;
 		
 		if(!fChainSteps.isEmpty())
