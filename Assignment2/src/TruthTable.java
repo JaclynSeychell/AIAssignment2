@@ -53,20 +53,50 @@ public class TruthTable extends Method {
 		return true;	
 	}
 
-	public void createTruthTable(int n) 
+	public void createTruthTable(int totalCols) 
 	{
 		//uses to binary string to convert to 1 and 0
-		for (int i = 0 ; i != (1 << n) ; i++) 
+		
+		for (int cel = 0 ; cel < Math.pow(2,totalCols) * totalCols ; cel++) 
 		{
-		    String s = Integer.toBinaryString(i);
-		    while (s.length() != n) 
+			int row = (int)Math.ceil(cel / totalCols);
+			int col = cel%totalCols;
+			
+			System.out.println(row + " "+ col);
+			
+		    String s = Integer.toBinaryString(cel);
+		    
+		    while (s.length() <= totalCols) 
 		    {
 		        s = '0'+s;
 		    }
 		    
 		    //System.out.println(s); STORE S in a variable 
 		    //What varibale shoukd be used to store in truth table??
-		   fLiteralsTable[n][s];
+		    
+		   //fLiteralsTable[row][col] = s.charAt(col);
+		   
+		    
+		   if( s.charAt(totalCols) == '1')
+		   {
+			   fLiteralsTable[cel][totalCols] = true;
+		   }
+		   else
+		   {
+			   fLiteralsTable[cel][totalCols] = false;
+		   }
+		}
+	}
+	
+	public void printTruthTable()
+	{
+		for (int row = 0; row < fLiteralsTable.length; row++)
+		{
+			for (int col= 0; col < fLiteralsTable[row].length; col++)
+			{
+				System.out.print(fLiteralsTable[row][col]);
+			}
+			System.out.println();
 		}
 	}
 		

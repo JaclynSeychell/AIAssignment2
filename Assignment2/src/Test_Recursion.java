@@ -11,7 +11,8 @@ public class Test_Recursion {
 		
 		TruthTable TruthT = new TruthTable(iEngine.fKnowledgeBase, iEngine.fLiterals);
 		
-		TruthT.printTruthTable(7);
+		TruthT.createTruthTable(2);
+		//TruthT.printTruthTable();
 	}
 	
 
