@@ -1,3 +1,4 @@
+package PropositionalLogic;
 import static org.junit.Assert.*;
 
 import java.util.Stack;
@@ -207,6 +208,28 @@ public class Test_Operators {
 		lOp = new Operator(Operator.CONJUNCTION_SYMBOL);
 		assertEquals(false, lOp.eval(lStack) );	// false
 		assertEquals(1, lStack.size() );
+		
+	}
+	
+	
+	@Test
+	public void Operators_StackManipulationTest2() {
+
+		Stack<Boolean> lStack = new Stack<Boolean>();
+		Operator lOp;
+		
+		lStack.push(true);
+		lStack.push(false);
+		
+		lOp = new Operator(Operator.CONJUNCTION_SYMBOL);
+		assertEquals(false, lOp.eval(lStack) );
+		
+		lStack.push(false);
+		
+		lOp = new Operator(Operator.IMPLICATION_SYMBOL);
+		assertEquals(true, lOp.eval(lStack) );
+		assertEquals(1, lStack.size() );
+		
 		
 	}
 

@@ -1,3 +1,4 @@
+package PropositionalLogic;
 import java.util.ArrayList;
 
 public abstract class Method {
@@ -9,18 +10,21 @@ public abstract class Method {
     {
     	fKB = aKB;
     }
+        
     
     // to be overridden by extending classes
-    public String printSolutionList()
+    public boolean solve()
+    {
+    	// override this function for each method that extends this class
+    	return false;
+    }
+    
+    // to be overridden by extending classes
+    public String getSolution()
     {
         return "";
     }
     
     
-    // to be overridden by extending classes
-    public boolean prepareSolution()
-    {
-    	// override this function for each method that extends this class
-    	return false;
-    }
+    
 }

@@ -1,9 +1,12 @@
+package PropositionalLogic;
 import java.util.ArrayList;
 
 public class InferenceEngine {
 
 	public ArrayList<Sentence> fKnowledgeBase;
 	public ArrayList<Literal> fLiterals;
+	private Method fMethod;
+	private String fSolveResult;
 	
 	// Constructor accepts a string containing the whole knowledgebase
 	// It splits up the string by semi-colons to create sentences and put them in a Knowledgebase field as a collection of sentences
@@ -57,6 +60,16 @@ public class InferenceEngine {
 		}
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Takes a string name of a Literal and returns the Literal object in the the Knowledge Base that corresponds to it.
+	 * 
+	 * @param lLiteralName	
+	 * @return Literal	
+	 */
 	private Literal getQueryLiteral(String lLiteralName)
 	{
 		Literal result = new Literal(lLiteralName);	// TODO: if this gets returned, the problem is actually unsolvable as the query literal doesn't exist in the sentences
@@ -75,11 +88,12 @@ public class InferenceEngine {
   
   
   
-	// this takes the Query string and solves it according to the method specified
-	public boolean prepareSolution(String aQ, String aMethod)
+	
+	
+
+	public boolean solve(String aQ, String aMethod)
 	{
 		
-		Method lMethod;
 		boolean lSuccess = false;
 		
 		Literal lQuery = getQueryLiteral(aQ);
@@ -87,13 +101,13 @@ public class InferenceEngine {
 		
 		switch(aMethod)
 		{
-			case "TT":	lMethod = new TruthTable(fKnowledgeBase, fLiterals);
+			case "TT":	fMethod = new TruthTable(fKnowledgeBase, fLiterals);
 						break;
 						
-			case "FC":	lMethod = new ForwardChaining(fKnowledgeBase, lQuery);
+			case "FC":	fMethod = new ForwardChaining(fKnowledgeBase, lQuery);
 						break;
 						
-			case "BC":	lMethod = new BackwardChaining(fKnowledgeBase, lQuery);
+			case "BC":	fMethod = new BackwardChaining(fKnowledgeBase, lQuery);
 						break;
 						
 			default:	System.out.println("No valid method chosen.");
@@ -101,35 +115,22 @@ public class InferenceEngine {
 		}
 		
 		// solve and print result
-		lSuccess = lMethod.prepareSolution();
+		lSuccess = fMethod.solve();
 		
 		if(lSuccess)
-			System.out.println( "YES: " + lMethod.printSolutionList() );
+			fSolveResult = "YES: " + fMethod.getSolution();
 		else
-			System.out.println( "NO" );
+			fSolveResult = "NO";
 
 		
-		
-		//System.out.println("Query: " + aQ);
-		//System.out.println("Method: " + aMethod);
 		
 		return lSuccess;
 	}
 	
 	
-	
-	public String solve(String aValues, String aMethod)
+	public String getSolveResult()
 	{
-		String[] lValues = aValues.split(";");
-		
-		// find value for each (split by =
-		
-		// then set in literals and apply trim
-		
-		// start method to solve
-		
-		// output result
-		return "result";
+		return fSolveResult;
 	}
 	
 	

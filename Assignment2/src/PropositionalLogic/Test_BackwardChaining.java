@@ -1,3 +1,4 @@
+package PropositionalLogic;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Test_BackwardChaining {
 		
 		BackwardChaining lMethod = new BackwardChaining(lKB, lQueryLiteral);
 		
-		assertFalse( lMethod.prepareSolution() );	// check it doesn't solve it
+		assertFalse( lMethod.solve() );	// check it doesn't solve it
 		
 	}
 	
@@ -39,7 +40,7 @@ public class Test_BackwardChaining {
 		
 		BackwardChaining lMethod = new BackwardChaining(lKB, lQueryLiteral);
 		
-		assertFalse( lMethod.prepareSolution() );	// check it doesn't solve it
+		assertFalse( lMethod.solve() );	// check it doesn't solve it
 		
 	}
 	
@@ -55,7 +56,7 @@ public class Test_BackwardChaining {
 		
 		BackwardChaining lMethod = new BackwardChaining(lKB, lQueryLiteral);
 		
-		assertFalse( lMethod.prepareSolution() );	// check it doesn't solve it
+		assertFalse( lMethod.solve() );	// check it doesn't solve it
 		
 	}
 	
@@ -83,7 +84,8 @@ public class Test_BackwardChaining {
 		
 		InferenceEngine iEngine = new InferenceEngine(lKB);
 		
-		assertTrue( iEngine.prepareSolution("d", "BC") );	// returns true if a route is found
+		assertTrue( iEngine.solve("d", "BC") );	// returns true if a route is found
+		assertEquals( "YES: p2, p3, p1, d", iEngine.getSolveResult() ); 
 		
 	}
 	
@@ -108,7 +110,8 @@ public class Test_BackwardChaining {
 		
 		InferenceEngine iEngine = new InferenceEngine(lKB);
 		
-		assertTrue( iEngine.prepareSolution("d", "BC") );	// returns true if a route is found
+		assertTrue( iEngine.solve("d", "BC") );	// returns true if a route is found
+		assertEquals( "YES: p2, p3, p1, decoy1, p1, d", iEngine.getSolveResult() ); 
 	}
 	
 	

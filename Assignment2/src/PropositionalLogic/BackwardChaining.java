@@ -1,3 +1,4 @@
+package PropositionalLogic;
 import java.util.ArrayList;
 import java.util.*;
 
@@ -18,10 +19,8 @@ public class BackwardChaining extends Method {
 	// Saves those steps in fChainSteps
 	// returns true if the query can be solved or false if not 
 	@Override
-	public boolean prepareSolution()
+	public boolean solve()
 	{
-		// fReadyToSolve is initialised to false in parent class;
-		
 		
 		// check everything in aKB is a horn sentence
 		for( Sentence lSentence : fKB )
@@ -29,7 +28,7 @@ public class BackwardChaining extends Method {
 			if(!lSentence.isHornClause())
 			{
 				// TODO: throw an error here
-				//"Not all sentences are Horn Clauses - Cannot use Backward Chaining";
+				//"ERROR: Not all sentences are Horn Clauses - Cannot use Backward Chaining";
 				return false;	// abort the process
 			}
 		}
@@ -106,10 +105,7 @@ public class BackwardChaining extends Method {
 			// (the sentence that was used has already been removed so it won't see that again)
 			lNeededLiterals.add( lKnownLiterals.pop() );
 			// remove the last added item in fChainSteps also as it's not longer a valid step
-			fChainSteps.pop();
-			
-			// TODO: should remove the irrelevant items off the chain too
-			
+			//fChainSteps.pop();
 			
 		} // NeededLiteralLoop end
 		
@@ -119,7 +115,7 @@ public class BackwardChaining extends Method {
 	
 	
 	@Override
-	public String printSolutionList()
+	public String getSolution()
 	{
 		String lMessage = "";
 		
@@ -136,6 +132,11 @@ public class BackwardChaining extends Method {
 		
 		return lMessage;
 	}
+	
+	
+	
+	
+	
 	
 	
 	
