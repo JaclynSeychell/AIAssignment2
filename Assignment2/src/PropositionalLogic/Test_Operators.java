@@ -10,7 +10,7 @@ public class Test_Operators {
 	
 	
 	@Test
-	public void Operators_NegationTest() {
+	public void Negation() {
 		
 		Stack<Boolean> lStack = new Stack<Boolean>(); 
 		
@@ -23,7 +23,7 @@ public class Test_Operators {
 	}
 	
 	@Test
-	public void Operators_ConjunctionTest() {
+	public void Conjunction() {
 
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;
@@ -64,7 +64,7 @@ public class Test_Operators {
 	}
 	
 	@Test
-	public void Operators_DisjunctionTest() {
+	public void Disjunction() {
 
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;
@@ -105,7 +105,7 @@ public class Test_Operators {
 	}
 	
 	@Test
-	public void Operators_ImplicationTest() {
+	public void Implication() {
 		
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;
@@ -146,7 +146,7 @@ public class Test_Operators {
 	}
 	
 	@Test
-	public void Operators_EquivalenceTest() {
+	public void Equivalence() {
 
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;
@@ -187,7 +187,7 @@ public class Test_Operators {
 	}
 	
 	@Test
-	public void Operators_StackManipulationTest() {
+	public void StackManipulation1() {
 
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;
@@ -213,7 +213,7 @@ public class Test_Operators {
 	
 	
 	@Test
-	public void Operators_StackManipulationTest2() {
+	public void StackManipulation2() {
 
 		Stack<Boolean> lStack = new Stack<Boolean>();
 		Operator lOp;

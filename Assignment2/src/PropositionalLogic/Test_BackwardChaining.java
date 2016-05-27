@@ -14,7 +14,7 @@ public class Test_BackwardChaining {
 	//
 	
 	@Test
-	public void BackwardChaining_TestNonHornSentence_Simple() throws Exception {
+	public void NonHornSentence_Simple() throws Exception {
 				
 		ArrayList<Sentence> lKB = new ArrayList<>();
 		lKB.add( new Sentence("p2=> p3&g") );
@@ -30,7 +30,7 @@ public class Test_BackwardChaining {
 	
 	
 	@Test
-	public void BackwardChaining_TestNonHornSentence_Complex() throws Exception {
+	public void NonHornSentence_Complex() throws Exception {
 				
 		ArrayList<Sentence> lKB = new ArrayList<>();
 		lKB.add( new Sentence("p2&w\\/~p5=> p3&g\\/h<=>y") );
@@ -46,7 +46,7 @@ public class Test_BackwardChaining {
 	
 	
 	@Test
-	public void BackwardChaining_TestNonHornSentence_MultipleImplications() throws Exception {
+	public void NonHornSentence_MultipleImplications() throws Exception {
 				
 		ArrayList<Sentence> lKB = new ArrayList<>();
 		lKB.add( new Sentence("p2=>p3&g=>y") );
@@ -67,7 +67,7 @@ public class Test_BackwardChaining {
 	//
 	
 	@Test
-	public void BackwardChaining_TestStraightForwardRoute() throws Exception {
+	public void StraightForwardRoute() throws Exception {
 				
 		// separated onto multiple lines for clarity
 		String lKB = "";
@@ -91,7 +91,7 @@ public class Test_BackwardChaining {
 	
 	
 	@Test
-	public void BackwardChaining_TestDeceptiveRoute() throws Exception {
+	public void DeceptiveRoute() throws Exception {
 		
 		// separated onto multiple lines for clarity
 		String lKB = "";

@@ -7,7 +7,7 @@ public class Test_TruthTable {
 
 
 	@Test
-	public void CreateTruthTableTest() {
+	public void CreateTruthTable() {
 		
 		String eol = System.getProperty("line.separator");
 		String TT = "";
@@ -31,7 +31,7 @@ public class Test_TruthTable {
 	
 	
 	@Test
-	public void TruthTableTest_Basic() {
+	public void Basic() {
 		
 		InferenceEngine iEngine = new InferenceEngine("a\\/b=>c;~b=>a;");
 		TruthTable TruthT = new TruthTable(iEngine.fKnowledgeBase, iEngine.fLiterals);
@@ -52,7 +52,7 @@ public class Test_TruthTable {
 	
 	
 	@Test
-	public void TruthTableTest_Example() {
+	public void Example() {
 		
 		InferenceEngine iEngine = new InferenceEngine("p2=> p3; p3 => p1; c => e; b&e => f; f&g => h; p1=>d; p1&p3 => c; a; b; p2;");
 		TruthTable TruthT = new TruthTable(iEngine.fKnowledgeBase, iEngine.fLiterals);

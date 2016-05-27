@@ -4,18 +4,32 @@ import java.util.Stack;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Sentence class contains all ProLogic objects that make up the sentence as well as some flags
+ * indicating the type of sentence.
+ * 
+ * @author Dale
+ *
+ */
 public class Sentence {
 	
 	// All Sentences
-	private ArrayList<Literal> fLiterals;
-	private ArrayList<ProLogic> fRpnSentence; // this shouldn't be called math logic, it should be prologic
+	private ArrayList<Literal> fLiterals;		// An ArrayList of all Literals used in the sentence
+	private ArrayList<ProLogic> fRpnSentence;	// An ArrayList of Literals and Operators in Reverse Polish Notation
+	
 	// If Horn Sentence
-	private boolean fIsHornClause = false;
-	private Literal fPositiveLiteral;
-	private ArrayList<Literal> fOtherLiterals;
-	private String fName;
+	private boolean fIsHornClause = false;		// a boolean representing if this sentence is a horn clause
+	private Literal fPositiveLiteral;			// The literal object on the right side of the implication symbol in a horn clause
+	private ArrayList<Literal> fOtherLiterals;	// all Literal objects not the positive literal in a hornClause
+	private String fName;						// the initial human readable name string (NOT rpn ordering)
 	
 	
+	
+	/**
+	 * Initialises the Sentence object and all fields based on a string representation of the sentence. ie "a&b=>c"
+	 * 
+	 * @param aSentence The String representing the sentence
+	 */
 	public Sentence(String aSentence)
 	{
 		// setup temp variables
@@ -27,10 +41,11 @@ public class Sentence {
 		fLiterals = new ArrayList<Literal>();
 		
 
-
-		aSentence = aSentence.trim(); // trim blank space off ends of whole sentence
+		// trim blank space off ends of whole sentence
+		aSentence = aSentence.trim(); 
 		
 		
+		// use Regular Expressions to split sentence into strings representing each literal or operator
 		// "\" is always doubled because it is javascript's escape character
 		String lDelims = "";
 		lDelims += "\\b"; // any alpha/numeric boundary
@@ -42,10 +57,6 @@ public class Sentence {
 		lDelims += "((?<=\\))\\B)"; // any non alpha/numeric boundary (ie numeric/numeric) that follows a close bracket
 		String[] temp = aSentence.split(lDelims);
 		List<String> lSentence = Arrays.asList(temp);
-		
-		
-		
-		
 		
 		
 		
@@ -72,15 +83,16 @@ public class Sentence {
 		}
 		else
 		{
-			// sentence has 2 elements
-			// this isn't valid (unless it's just a negated literal, but that doesn't make much sense either)
+			// sentence has 2 elements - this can't be horn form.
+			// It could be just a negated literal, but that's not a horn clause either.
 			fIsHornClause = false;
 		}
 		
 		
 
 		
-				
+		// Interpret all strings as Operators or Literals.
+		// Initialised them and order them according to Reverse Polish Notation	
 		for(String lLogicStr : lSentence)
 		{
 			lLogicStr = lLogicStr.trim(); // remove white space characters from either end
@@ -130,8 +142,6 @@ public class Sentence {
 			}
 			
 		}
-		
-		
 		//Add all of the remaining operators to fRpnSentence
         while( !lOperators.isEmpty() )
         	addToSentence(lOperators.pop());
@@ -164,7 +174,11 @@ public class Sentence {
 	
 	
 	
-	
+	/**
+	 * Gets a human readable String of the sentence (NOT rpn ordered)
+	 *  
+	 * @return The String of the sentence.
+	 */
 	public String getName()
 	{
 		return fName;
@@ -175,17 +189,11 @@ public class Sentence {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*
 	 * Manipulating Literals
 	 */
+	
+	
 	
 	protected void addLiteral(Literal aLiteral)
 	{
@@ -274,8 +282,11 @@ public class Sentence {
 	
 	
 	
-	
+	///////////////
 	// Horn Clauses
+	///////////////
+	
+	
 	
 	public boolean isHornClause() {
 		return fIsHornClause;
@@ -289,6 +300,9 @@ public class Sentence {
 	{
 		return fPositiveLiteral;
 	}
+	
+	
+	
 	
 	
 	/*

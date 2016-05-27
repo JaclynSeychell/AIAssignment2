@@ -11,7 +11,12 @@ import java.nio.charset.StandardCharsets;
 public class Main {
 	
 	
-	
+	/**
+	 * Reads in the Knowledgebase in the specified file, begins an InferenceEngine and solves based on the method defined.
+	 * 
+	 * @param aMethod A String indicating the method to use to solve the Knowledgebase and Query
+	 * @param aFilename A String of the filename containing the KnowledgeBase and query to process
+	 */
 	public static void processExternalFile(String aMethod, String aFilename)
     {
         File lFile = new File(aFilename);
@@ -68,7 +73,20 @@ public class Main {
 	
 
 	public static void main(String[] args) {
+		
 		// check for correct number of command line arguments
+		if(args.length < 2)
+		{
+			System.out.println();
+			System.out.println("Please use the commandline argument format:  InferenceEngine.jar XX filename");
+			System.out.println();
+			System.out.println("Where XX equals method of solving:");
+			System.out.println("   TT = Forward Chaining");
+			System.out.println("   FC = Forward Chaining");
+			System.out.println("   BC = Backward Chaining");
+			System.out.println("And filename is the text file that contains the knowledgebase and query.");
+			return;
+		}
 		
 		
 		// process based on commandline arguments

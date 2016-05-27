@@ -2,20 +2,29 @@ package PropositionalLogic;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * TruthTable extends Method as a way to calculate a solution to the desired query literal
+ * based on the KnowledgeBase initially passed into the InferenceEngine class.
+ * It is automatically called from the InferenceEngine class.
+ * It can solve based on any sentence format.
+ * 
+ * @author Jaclyn
+ */
 public class TruthTable extends Method {
 	
-	//Get literals from the sentence, place into a stack in RPN
-	//Create  Array, place individual literals into one array (a,b,c,etc)
-	//Create Array, place sentences literals into array : done by using the stack
-	//popping literal off stack, searching for in first array, repeat until you find condtion
-	//evaluate for T/F of each sentence
-	//calculate all the T for the whole KB
 	
-	private boolean fLiteralsTable[][]; //[index][row(t/f)] TRUTH TABLE < -
+	private boolean fLiteralsTable[][];		// TruthTable values
 	private ArrayList<Literal> fLiterals;
 	private ArrayList<Sentence> fSentences;
-	private int fTrueValues;
+	private int fTrueValues;				// Number of valid rows in the TruthTable
 	
+	
+	/**
+	 * Initialises the KnowledgeBase to be used by the solve method.
+	 * 
+	 * @param aKB takes a ArrayList of sentences
+	 * @param aLiterals takes an ArrayList of all Literals in the KnowledgeBase
+	 */
 	public TruthTable(ArrayList<Sentence> aKB, ArrayList<Literal> aLiterals)
 	{
 		super(aKB);
@@ -41,8 +50,12 @@ public class TruthTable extends Method {
 	
 	
 	
-	// look for correct rows
-	// loop 2^fLiterals.length times
+	/**
+	 * Finds number of rows in the TruthTable that are valid.
+	 * Saves that number in fTrueValues field.
+	 * 
+	 * @return A boolean indicating whether a solution was successfully found
+	 */
 	@Override
 	public boolean solve()
 	{
@@ -114,7 +127,11 @@ public class TruthTable extends Method {
 	
 	
 	
-
+	/**
+     * Creates a human readable summary of the solution previously found by the solve method (the number of valid rows).
+     * 
+     * @return String as a human readable summary of the previously found solution.
+     */
 	@Override
 	public String getSolution()
     {
@@ -123,7 +140,12 @@ public class TruthTable extends Method {
 	
 	
 	
-	
+	/**
+	 * Creates a TruthTable of all possible boolean value permutations for the supplied Literals.
+	 * result is accessible from the fLiteralsTable field.
+	 * 
+	 * @param totalCols requires the number of Literals the truthtable should be built to support
+	 */
 	public void createTruthTable(int totalCols) 
 	{
 		int totalRows =  (int)Math.pow(2,totalCols);
@@ -154,7 +176,13 @@ public class TruthTable extends Method {
 	}
 	
 	
-	
+	/**
+	 * Looks up a boolean value at a specified cell of the TruthTable calculated in createTruthTable.
+	 * 
+	 * @param row is an integer indicating the row of the TruthTable
+	 * @param item is a Literal that is resolved to the column in the TruthTable containing the correct value. 
+	 * @return The boolean value at the corresponding cell in the TruthTable
+	 */
 	private Boolean getValueFromTT(int row, Literal item)
 	{
 		//find integer that correlates to literal passed in
@@ -173,6 +201,12 @@ public class TruthTable extends Method {
 	}
 	
 	
+	/**
+	 * Get's a String that is a human readable representation of the TruthTable with line breaks after each row.
+	 * Only used for testing.
+	 * 
+	 * @return A String
+	 */
 	public String getTruthTable()
 	{
 		String result = "";
@@ -191,7 +225,13 @@ public class TruthTable extends Method {
 	}
 	
 	
-	
+	/**
+	 * Get's a 1 or 0 String that is a human readable representation of all
+	 * cells in a particular row of the TruthTable.
+	 * Only used for testing.
+	 * 
+	 * @return A String
+	 */
 	private String getRowValues(int aRow)
 	{
 		String result = "";

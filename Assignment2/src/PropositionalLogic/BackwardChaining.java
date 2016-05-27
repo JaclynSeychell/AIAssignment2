@@ -2,11 +2,26 @@ package PropositionalLogic;
 import java.util.ArrayList;
 import java.util.*;
 
+/**
+ * BackwardChaining extends Method as a way to calculate a solution to the desired query literal
+ * based on the KnowledgeBase initially passed into the InferenceEngine class.
+ * It is automatically called from the InferenceEngine class.
+ * It can only solve if the KnowledgeBase is all HornClauses.
+ * 
+ *  @author Dale
+ */
 public class BackwardChaining extends Method {
 	
 	Literal fQuery;
 	Stack<Sentence> fChainSteps;
 	
+	
+	/**
+	 * Initialises the KnowledgeBase and Query Literal to be used by the solve method.
+	 * 
+	 * @param aKB takes a ArrayList of sentences
+	 * @param aQuery takes a Literal indicating the requested solution
+	 */
 	public BackwardChaining(ArrayList<Sentence> aKB, Literal aQuery)
 	{
 		super(aKB);		// save the knowledgebase using the superclasses constructor
@@ -15,9 +30,13 @@ public class BackwardChaining extends Method {
 	
 	
 	
-	// Finds steps in the chain that can be used to solve the query
-	// Saves those steps in fChainSteps
-	// returns true if the query can be solved or false if not 
+	
+	/**
+	 * Finds steps in the chain that can be used to solve the query.
+	 * Saves those steps in fChainSteps.
+	 * 
+	 * @return A boolean indicating whether a solution was successfully found
+	 */
 	@Override
 	public boolean solve()
 	{
@@ -103,7 +122,10 @@ public class BackwardChaining extends Method {
 			lNeededLiterals.clear();
 			// add the last found literal back into lNeededLiterals to look for a different route
 			// (the sentence that was used has already been removed so it won't see that again)
-			lNeededLiterals.add( lKnownLiterals.pop() );
+			if(lKnownLiterals.isEmpty())
+				break NeededLiteralLoop; // haven't found the solution and there's no more steps
+			else
+				lNeededLiterals.add( lKnownLiterals.pop() );
 			// remove the last added item in fChainSteps also as it's not longer a valid step
 			//fChainSteps.pop();
 			
@@ -114,6 +136,12 @@ public class BackwardChaining extends Method {
 	}
 	
 	
+	
+	/**
+     * Creates a human readable summary of the solution previously found by the solve method.
+     * 
+     * @return String as a human readable summary of the previously found solution.
+     */
 	@Override
 	public String getSolution()
 	{

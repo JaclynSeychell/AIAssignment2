@@ -1,15 +1,25 @@
 package PropositionalLogic;
 import java.util.ArrayList;
 
+/**
+ * InferenceEngine is the main class used to initialise an Inference Engine for calculating solutions
+ * to Propositional Logic Knowledgebases.
+ * 
+ * @author Jaclyn & Dale
+ */
 public class InferenceEngine {
 
-	public ArrayList<Sentence> fKnowledgeBase;
-	public ArrayList<Literal> fLiterals;
-	private Method fMethod;
-	private String fSolveResult;
+	public ArrayList<Sentence> fKnowledgeBase;	// only public for testing purposes
+	public ArrayList<Literal> fLiterals;		// only public for testing purposes
+	private Method fMethod;						// the method initialised for solving the query
+	private String fSolveResult;				// the human readable result found after solving the method
 	
-	// Constructor accepts a string containing the whole knowledgebase
-	// It splits up the string by semi-colons to create sentences and put them in a Knowledgebase field as a collection of sentences
+	
+	
+	/**
+	 * Constructor initialises a Knowledgebase of passed in sentences and all literals contained in those sentences
+	 * @param aKB A String of the format "sentence1;sentence2;sentence3;etc" ie "a&b=>c;a"
+	 */
 	public InferenceEngine(String aKB)
 	{
 
@@ -26,8 +36,11 @@ public class InferenceEngine {
 	
 	
 	
-	// make sure all literals in every sentence refer to the same object in memory
-	// this is necessary as a post process because each sentence interprets the sentence string internally.
+
+	/**
+	 * Unifys all Literals in fLiterals and fKnowledgeBase so that each Literal with an equivalent String name points to the same object.
+	 * This is necessary as a post process because each sentence interprets the sentence string internally.
+	 */
 	private void unifyLiterals()
 	{
 		
@@ -65,10 +78,9 @@ public class InferenceEngine {
 	
 	
 	/**
-	 * Takes a string name of a Literal and returns the Literal object in the the Knowledge Base that corresponds to it.
-	 * 
-	 * @param lLiteralName	
-	 * @return Literal	
+	 * Takes a human readable string representation of the Literal and returns the corresponding Literal object
+	 * @param lLiteralName A String representation of the Literal
+	 * @return The Literal object corresponding to that String name
 	 */
 	private Literal getQueryLiteral(String lLiteralName)
 	{
@@ -90,7 +102,17 @@ public class InferenceEngine {
   
 	
 	
-
+	/**
+	 * Sets up and solves using a specified method.
+	 * TT = TruthTable
+	 * FC = Forward Chaining
+	 * BC = Backward Chaining
+	 * Saves a human readable result in fSolveResult - Accessible through getSolveResult
+	 * 
+	 * @param aQ A String representing the name of the literal to solve for in FC or BC
+	 * @param aMethod a String representing the name of the method to use.
+	 * @return A boolean indicating whether a solution was successfully found.
+	 */
 	public boolean solve(String aQ, String aMethod)
 	{
 		
@@ -128,6 +150,12 @@ public class InferenceEngine {
 	}
 	
 	
+	
+	/**
+	 * Accesses the human readable result created by the solve method
+	 * 
+	 * @return A String of the human readable result
+	 */
 	public String getSolveResult()
 	{
 		return fSolveResult;
@@ -138,10 +166,12 @@ public class InferenceEngine {
 	
 	
 	
-	///////////////////
-	// just for testing
-	///////////////////
-	
+	/**
+	 * Creates a human readable string of the Sentences in fKnowledgeBase as per their originally inputted format
+	 * Only used for testing.
+	 * 
+	 * @return A String of human readable sentences
+	 */
 	public String getKnowledgeBaseString()
 	{
 		String result = "";
@@ -156,6 +186,14 @@ public class InferenceEngine {
 		return result;
 	}
 	
+	
+	
+	/**
+	 * Creates a human readable string of the Literals in fLiterals.
+	 * Only used for testing.
+	 * 
+	 * @return A String of human readable Literals separated by colons
+	 */
 	public String getLiteralsString()
 	{
 		String result = "";

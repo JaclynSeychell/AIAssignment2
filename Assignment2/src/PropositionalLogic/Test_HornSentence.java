@@ -9,7 +9,7 @@ public class Test_HornSentence {
 	
 	
 	@Test
-	public void HornSentence_RecognitionTest() throws Exception {
+	public void Recognition() throws Exception {
 		
 		Sentence lSentence;
 		
@@ -31,7 +31,7 @@ public class Test_HornSentence {
 	
 	
 	@Test
-	public void HornSentence_SetupLiteralsTest() throws Exception {
+	public void SetupLiterals() throws Exception {
 		
 		Sentence lSentence = new Sentence("Big&Tall=>Giant");
 		assertEquals( true, lSentence.isHornClause() );

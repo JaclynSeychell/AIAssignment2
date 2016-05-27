@@ -8,7 +8,7 @@ public class Test_Sentence {
 	
 	
 	@Test
-	public void Sentence_SpacesTest() throws Exception {
+	public void Spaces() throws Exception {
 		
 		Sentence lSentence = new Sentence("Big & ~ Tall => Giant");
 		
@@ -36,7 +36,7 @@ public class Test_Sentence {
 	
 	
 	@Test
-	public void Sentence_LiteralsTest() throws Exception {
+	public void Literals() throws Exception {
 		
 		Sentence lSentence = new Sentence("Big&Tall=>Giant");
 		
@@ -56,7 +56,7 @@ public class Test_Sentence {
 	
 	
 	@Test
-	public void Sentence_BasicTest() throws Exception {
+	public void Basic() throws Exception {
 		
 		Sentence lSentence = new Sentence("Big&Tall=>Giant");
 		
@@ -72,7 +72,7 @@ public class Test_Sentence {
 	
 	
 	@Test
-	public void Sentence_NegationTest() throws Exception {
+	public void Negation() throws Exception {
 		
 		Sentence lSentence = new Sentence("Big&~Tall=>Giant");
 		
@@ -88,7 +88,7 @@ public class Test_Sentence {
 	
 	
 	@Test
-	public void Sentence_BracketTest() throws Exception {
+	public void Brackets() throws Exception {
 		
 		Sentence lSentence = new Sentence("(A \\/ B) & (C \\/ D) => E");
 		

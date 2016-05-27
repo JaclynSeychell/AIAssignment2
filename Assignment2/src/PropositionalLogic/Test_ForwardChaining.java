@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class Test_ForwardChaining {
 
+	
 	@Test
 	public void NonHornSentence_Simple() throws Exception {
 				
