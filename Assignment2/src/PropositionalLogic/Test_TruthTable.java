@@ -31,37 +31,34 @@ public class Test_TruthTable {
 	
 	
 	@Test
-	public void Basic() {
+	public void Basic1() {
 		
 		InferenceEngine iEngine = new InferenceEngine("a\\/b=>c;~b=>a;");
 		TruthTable TruthT = new TruthTable(iEngine.fKnowledgeBase, iEngine.fLiterals);
 		
 		assertTrue( TruthT.solve() );					// check solution reports as solvable
 		
-		assertEquals( "2", TruthT.getSolution() );		// check 2 rows are reported as true - row 5 and 7 (zero indexed)
-														// see truth table in above test for easy reference
+		//System.out.println(TruthT.getTruthTable());	// see truth table in above test for easy reference
+		
+		assertEquals( "3", TruthT.getSolution() );		// check solution reports correct number of valid rows
 		
 		
-		iEngine = new InferenceEngine("a\\/b=>c;~b=>a;b;a;");
-		TruthT = new TruthTable(iEngine.fKnowledgeBase, iEngine.fLiterals);
-		
-		assertTrue( TruthT.solve() );
-		assertEquals( "1", TruthT.getSolution() );
 		
 	}
 	
-	
 	@Test
-	public void Example() {
+	public void Basic2() {
 		
-		InferenceEngine iEngine = new InferenceEngine("p2=> p3; p3 => p1; c => e; b&e => f; f&g => h; p1=>d; p1&p3 => c; a; b; p2;");
+		InferenceEngine iEngine = new InferenceEngine("a\\/b=>c;~b=>a;b;a;");
 		TruthTable TruthT = new TruthTable(iEngine.fKnowledgeBase, iEngine.fLiterals);
 		
 		assertTrue( TruthT.solve() );					// check solution reports as solvable
-		
-		assertEquals( "3", TruthT.getSolution() );	// check it reports correct number of rows
+		assertEquals( "1", TruthT.getSolution() );		// check solution reports correct number of valid rows
 		
 	}
+	
+	
+	
 	
 
 }

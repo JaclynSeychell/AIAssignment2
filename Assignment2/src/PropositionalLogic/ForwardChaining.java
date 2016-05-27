@@ -92,7 +92,7 @@ public class ForwardChaining extends Method {
 				if(lSentence.getPositiveLiteral() == fQuery )
 				{
 					//System.out.println("About to break SearchLoop");
-					solutionPrepared = true;
+					fSolutionPrepared = true;
 					break SearchLoop;
 				}
 			
@@ -105,18 +105,16 @@ public class ForwardChaining extends Method {
 				lUnknownSentences.remove( fChainSteps.get(k) );
 			}
 			
-			
 			// if we've looked at ALL the sentences and haven't found another step, it can't be solved
 			if( !lProgressMade )
 			{
 				break SearchLoop;
 			}
 		
-			//System.out.println("About to loop again");
 		} // SearchLoop end
 				
 		
-		return solutionPrepared;
+		return fSolutionPrepared;
 	}
 	
 	
@@ -132,7 +130,7 @@ public class ForwardChaining extends Method {
 	{		
 		String lMessage = "";
 		
-		if(!solutionPrepared)	// a solution wasn't found - so don't print the steps found
+		if(!fSolutionPrepared)	// a solution wasn't found - so don't print the steps found
 			return lMessage;
 		
 		if(!fChainSteps.isEmpty())
@@ -146,6 +144,12 @@ public class ForwardChaining extends Method {
 				lMessage +=	lSentence.getPositiveLiteral().getName();
 			}
 		
+		}
+
+		if(fErrorMessage != "")
+		{
+			lMessage += System.getProperty("line.separator");
+			lMessage += fErrorMessage;
 		}
 		
 		return lMessage;

@@ -8,8 +8,9 @@ import java.util.ArrayList;
  */
 public abstract class Method {
 	
-    protected ArrayList<Sentence> fKB;	// to store the knowledgebase passed in
-    protected boolean solutionPrepared = false;
+    protected ArrayList<Sentence> fKB;				// to store the knowledgebase passed in
+    protected boolean fSolutionPrepared = false;	// indicates is a solution has been prepared
+	protected String fErrorMessage = "";			// holds any error message from the solve	
     
     
     /**

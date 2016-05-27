@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>10</y>
+      <w>470</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>PropositionalLogic::TruthTable
+--
+-fLiteralsTable[][]: boolean
+-fLiterals: ArrayList&lt;Literal&gt;
+-fSentences: ArrayList&lt;Sentence&gt;
+-fTrueValues: int
+--
++TruthTable(ArrayList&lt;Sentence&gt; aKB, ArrayList&lt;Literal&gt; aLiterals): ctor
++solve(): boolean
++getSolution(): String
++createTruthTable(int totalCols): void
+-getValueFromTT(int row, Literal item): Boolean
++getTruthTable(): String
+-getRowValues(int aRow): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>490</x>
+      <y>10</y>
+      <w>270</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>/PropositionalLogic::Method/
+--
+#fKB: ArrayList&lt;Sentence&gt;
+#fSolutionPrepared = false: boolean
+#fErrorMessage = "": String
+--
++Method(ArrayList&lt;Sentence&gt; aKB): ctor
++solve(): boolean
++getSolution(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>260</y>
+      <w>440</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>PropositionalLogic::BackwardChaining
+--
+~fQuery: Literal
+~fChainSteps: Stack&lt;Sentence&gt;
+--
++BackwardChaining(ArrayList&lt;Sentence&gt; aKB, Literal aQuery): ctor
++solve(): boolean
++getSolution(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>460</x>
+      <y>260</y>
+      <w>430</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>PropositionalLogic::ForwardChaining
+--
+~fQuery: Literal
+~fChainSteps: Stack&lt;Sentence&gt;
+--
++ForwardChaining(ArrayList&lt;Sentence&gt; aKB, Literal aQuery): ctor
++solve(): boolean
++getSolution(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

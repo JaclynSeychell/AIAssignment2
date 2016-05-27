@@ -106,7 +106,7 @@ public class BackwardChaining extends Method {
 					if(lNeededLiterals.isEmpty())
 					{
 						// then no need to search anymore
-						solutionPrepared = true;
+						fSolutionPrepared = true;
 						break NeededLiteralLoop;
 					} else {
 						// otherwise, skip to the next literal needed
@@ -118,21 +118,25 @@ public class BackwardChaining extends Method {
 			
 			
 			// if this is reached the literal wasn't found as implied in any sentence
+			// try and backtrack to find a new path
+			
 			// erase the lNeededLiterals stack as it contains literals that contribute to a sentence that can't be solved
 			lNeededLiterals.clear();
+			
 			// add the last found literal back into lNeededLiterals to look for a different route
 			// (the sentence that was used has already been removed so it won't see that again)
-			if(lKnownLiterals.isEmpty())
-				break NeededLiteralLoop; // haven't found the solution and there's no more steps
-			else
+			if(!lKnownLiterals.isEmpty())
 				lNeededLiterals.add( lKnownLiterals.pop() );
+			else
+				break NeededLiteralLoop; // haven't found the solution and there's no more steps
+				
 			// remove the last added item in fChainSteps also as it's not longer a valid step
-			//fChainSteps.pop();
+			//fChainSteps.pop();	// this is commented out so no attempted steps are removed
 			
 		} // NeededLiteralLoop end
 		
 		
-		return solutionPrepared;
+		return fSolutionPrepared;
 	}
 	
 	
@@ -156,6 +160,12 @@ public class BackwardChaining extends Method {
 					lMessage += ", ";
 				lMessage +=	lSentence.getPositiveLiteral().getName();
 			}
+		}
+		
+		if(fErrorMessage != "")
+		{
+			lMessage += System.getProperty("line.separator");
+			lMessage += fErrorMessage;
 		}
 		
 		return lMessage;

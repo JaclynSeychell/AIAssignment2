@@ -107,8 +107,7 @@ public class TruthTable extends Method {
 			// increase valid row count if valid
 			if(rowValid)
 			{
-				//System.out.println(row);
-				//System.out.println(getRowValues(row));
+				//System.out.println("Row: " + row + ":   " + getRowValues(row));
 				fTrueValues++;
 			}
 			
@@ -118,9 +117,9 @@ public class TruthTable extends Method {
 		
 		// If there are valid rows, note that.
 		if(fTrueValues>0)
-			solutionPrepared = true;
+			fSolutionPrepared = true;
 		
-		return solutionPrepared;
+		return fSolutionPrepared;
 	}
 	
 	
@@ -135,7 +134,15 @@ public class TruthTable extends Method {
 	@Override
 	public String getSolution()
     {
-        return Integer.toString(fTrueValues);
+		String lMessage = Integer.toString(fTrueValues);
+
+		if(fErrorMessage != "")
+		{
+			lMessage += System.getProperty("line.separator");
+			lMessage += fErrorMessage;
+		}
+		
+        return lMessage;
     }
 	
 	
